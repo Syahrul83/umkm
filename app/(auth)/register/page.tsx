@@ -36,7 +36,10 @@ export default function RegisterPage() {
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 py-12 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.08] bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url("/batik-bg.png")` }}
+        />
         <section className="w-full max-w-md">
           <div className="bg-white border border-border rounded-xl p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)]">
             <div className="mb-6 text-center">
