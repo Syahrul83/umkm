@@ -1,55 +1,41 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 
-const kpiData = [
-  { icon: "storefront", label: "Bisnis Baru", value: "1.284", trend: "+12% vs bulan lalu", color: "bg-blue-50", iconBg: "bg-blue-100" },
-  { icon: "query_stats", label: "Tingkat Pertumbuhan", value: "8.4%", trend: "+2.1% peningkatan", color: "bg-green-50", iconBg: "bg-green-100" },
-  { icon: "explore", label: "Wilayah Teraktif", value: "Samarinda", trend: "420 Registrasi baru", color: "bg-gray-50", iconBg: "bg-gray-100" },
-  { icon: "military_tech", label: "Kategori Unggulan", value: "Kuliner", trend: "35% dari total UMKM", color: "bg-red-50", iconBg: "bg-red-100" },
-]
-
-const monthlyData = [
-  { month: "Jan", thisYear: 120, lastYear: 90 },
-  { month: "Feb", thisYear: 180, lastYear: 110 },
-  { month: "Mar", thisYear: 150, lastYear: 130 },
-  { month: "Apr", thisYear: 210, lastYear: 160 },
-  { month: "Mei", thisYear: 240, lastYear: 180 },
-  { month: "Jun", thisYear: 190, lastYear: 150 },
-  { month: "Jul", thisYear: 342, lastYear: 200 },
-]
-
-const regionData = [
-  { name: "Samarinda", pct: 60, color: "#000000" },
-  { name: "Balikpapan", pct: 25, color: "#006a61" },
-  { name: "Lainnya", pct: 15, color: "#cbd5e1" },
-]
-
-const categoryData = [
-  { category: "Makanan & Minuman", pct: 45 },
-  { category: "Retail & Dagang", pct: 28 },
-  { category: "Jasa Kreatif", pct: 15 },
-  { category: "Teknologi & Digital", pct: 12 },
-]
-
-const insights = [
-  { icon: "lightbulb", text: "Sektor Kuliner di Samarinda Utara menunjukkan saturasi tinggi. Disarankan memberikan insentif untuk sektor Logistik guna menyeimbangkan ekosistem." },
-  { icon: "trending_up", text: "Prediksi pertumbuhan bulan depan mencapai +5.2%, didorong oleh peluncuran program hibah daerah baru." },
-  { icon: "priority_high", text: "Terdapat anomali data pendaftaran di wilayah Balikpapan Timur yang memerlukan verifikasi manual segera." },
-]
+interface StatistikData {
+  totalSearches: number
+  thisMonth: number
+  lastMonth: number
+  growth: number
+  topLocationName: string
+  topCategoryName: string
+  topCategoryPct: number
+  locationDist: { name: string; count: number; pct: number; color: string }[]
+  monthlyTrend: { month: string; count: number }[]
+  categoryDist: { category: string; count: number; pct: number }[]
+}
 
 const circumference = 2 * Math.PI * 40
-let offset = 0
-const segments = regionData.map((r) => {
-  const dash = (r.pct / 100) * circumference
-  const seg = { ...r, dash, offset }
-  offset += dash
-  return seg
-})
 
 export default function AdminStatistik() {
+  const [data, setData] = useState<StatistikData | null>(null)
   const [range, setRange] = useState("30")
+
+  useEffect(() => {
+    fetch("/api/admin/statistik").then(r => r.json()).then(setData)
+  }, [])
+
+  const segments = (data?.locationDist || []).map((r) => {
+    let offset = 0
+    const segs = data!.locationDist.map((d) => {
+      const dash = (d.pct / 100) * circumference
+      const s = { ...d, dash, offset }
+      offset += dash
+      return s
+    })
+    return segs
+  })[0] || []
 
   return (
     <div className="space-y-6">
@@ -73,78 +59,105 @@ export default function AdminStatistik() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {kpiData.map((kpi, i) => (
-          <Card key={i} className="border-border/50 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-5">
-              <div className="flex justify-between items-start mb-2">
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">{kpi.label}</span>
-                <span className={`material-symbols-outlined text-[18px] p-1 rounded ${kpi.iconBg}`}>{kpi.icon}</span>
-              </div>
-              <p className="text-2xl font-bold tracking-tight">{kpi.value}</p>
-              <p className="text-xs text-secondary mt-2 flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">trending_up</span>
-                {kpi.trend}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+        <Card className="border-border/50 shadow-sm">
+          <CardContent className="p-5">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Total Pencarian</span>
+              <span className="material-symbols-outlined text-[18px] p-1 rounded bg-blue-100 text-blue-700">search</span>
+            </div>
+            <p className="text-2xl font-bold tracking-tight">{(data?.totalSearches || 0).toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground mt-2">Akumulasi seluruh periode</p>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 shadow-sm">
+          <CardContent className="p-5">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Bulan Ini</span>
+              <span className="material-symbols-outlined text-[18px] p-1 rounded bg-green-100 text-green-700">trending_up</span>
+            </div>
+            <p className="text-2xl font-bold tracking-tight">{data?.thisMonth || 0}</p>
+            <p className={`text-xs mt-2 flex items-center gap-1 ${(data?.growth || 0) > 0 ? "text-secondary" : "text-destructive"}`}>
+              <span className="material-symbols-outlined text-[14px]">{(data?.growth || 0) > 0 ? "arrow_upward" : "arrow_downward"}</span>
+              {data?.growth || 0}% vs bulan lalu
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 shadow-sm">
+          <CardContent className="p-5">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Wilayah Teraktif</span>
+              <span className="material-symbols-outlined text-[18px] p-1 rounded bg-gray-100 text-gray-700">explore</span>
+            </div>
+            <p className="text-2xl font-bold tracking-tight truncate">{data?.topLocationName || "-"}</p>
+            <p className="text-xs text-muted-foreground mt-2">Paling sering dicari</p>
+          </CardContent>
+        </Card>
+        <Card className="border-border/50 shadow-sm">
+          <CardContent className="p-5">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Kategori Unggulan</span>
+              <span className="material-symbols-outlined text-[18px] p-1 rounded bg-red-100 text-red-700">military_tech</span>
+            </div>
+            <p className="text-2xl font-bold tracking-tight truncate">{data?.topCategoryName || "-"}</p>
+            <p className="text-xs text-muted-foreground mt-2">{data?.topCategoryPct || 0}% dari pencarian</p>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card className="lg:col-span-2 border-border/50 shadow-sm">
           <CardContent className="p-5">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-base font-semibold">Tren Registrasi UMKM</h3>
-              <div className="flex gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-primary rounded-full" /> Tahun Ini</span>
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-muted-foreground/30 rounded-full" /> Tahun Lalu</span>
-              </div>
+              <h3 className="text-base font-semibold">Tren Pencarian UMKM</h3>
+              <span className="text-xs text-muted-foreground">Per bulan (12 bulan)</span>
             </div>
-            <ResponsiveContainer width="100%" height={280}>
-              <BarChart data={monthlyData}>
-                <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="thisYear" fill="#000000" radius={[4, 4, 0, 0]} name="Tahun Ini" />
-                <Bar dataKey="lastYear" fill="#cbd5e1" radius={[4, 4, 0, 0]} name="Tahun Lalu" />
-              </BarChart>
-            </ResponsiveContainer>
+            {data?.monthlyTrend?.length ? (
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={data.monthlyTrend}>
+                  <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#000000" radius={[4, 4, 0, 0]} name="Pencarian" />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : <p className="text-sm text-muted-foreground text-center py-10">Belum ada data tahun ini</p>}
           </CardContent>
         </Card>
 
         <Card className="border-border/50 shadow-sm">
           <CardContent className="p-5">
             <h3 className="text-base font-semibold mb-4">Distribusi Wilayah</h3>
-            <div className="flex flex-col items-center gap-4">
-              <div className="relative w-44 h-44">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  {segments.map((s, i) => (
-                    <circle key={i} cx="50" cy="50" r="40" fill="transparent"
-                      stroke={s.color} strokeWidth="12" strokeDasharray={s.dash}
-                      strokeDashoffset={-s.offset + circumference}
-                      className="transition-all duration-500"
-                    />
+            {data?.locationDist?.length ? (
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative w-44 h-44">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    {segments?.map((s: any, i: number) => (
+                      <circle key={i} cx="50" cy="50" r="40" fill="transparent"
+                        stroke={s.color} strokeWidth="12" strokeDasharray={s.dash}
+                        strokeDashoffset={-s.offset + circumference} className="transition-all duration-500"
+                      />
+                    ))}
+                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#e2e8f0" strokeWidth="12"
+                      strokeDasharray={circumference} strokeDashoffset={0} className="opacity-30" />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center flex-col">
+                    <span className="text-xl font-bold">{data.locationDist.length}</span>
+                    <span className="text-xs text-muted-foreground">Wilayah</span>
+                  </div>
+                </div>
+                <div className="w-full space-y-2">
+                  {data.locationDist.map((r, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm">
+                      <span className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: r.color }} />
+                        {r.name.length > 12 ? r.name.slice(0, 11) + "…" : r.name}
+                      </span>
+                      <span className="font-medium">{r.pct}%</span>
+                    </div>
                   ))}
-                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="#e2e8f0" strokeWidth="12"
-                    strokeDasharray={circumference} strokeDashoffset={0} className="opacity-30" />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center flex-col">
-                  <span className="text-xl font-bold">10+</span>
-                  <span className="text-xs text-muted-foreground">Kota</span>
                 </div>
               </div>
-              <div className="w-full space-y-2">
-                {regionData.map((r, i) => (
-                  <div key={i} className="flex justify-between items-center text-sm">
-                    <span className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: r.color }} />
-                      {r.name}
-                    </span>
-                    <span className="font-medium">{r.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ) : <p className="text-sm text-muted-foreground text-center py-10">Belum ada data</p>}
           </CardContent>
         </Card>
       </div>
@@ -153,19 +166,21 @@ export default function AdminStatistik() {
         <Card className="border-border/50 shadow-sm">
           <CardContent className="p-5">
             <h3 className="text-base font-semibold mb-4">Kategori UMKM Terpopuler</h3>
-            <div className="space-y-4">
-              {categoryData.map((c, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>{c.category}</span>
-                    <span className="font-medium">{c.pct}%</span>
+            {data?.categoryDist?.length ? (
+              <div className="space-y-4">
+                {data.categoryDist.slice(0, 5).map((c, i) => (
+                  <div key={i}>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span>{c.category}</span>
+                      <span className="font-medium">{c.pct}%</span>
+                    </div>
+                    <div className="w-full bg-muted h-2.5 rounded-full overflow-hidden">
+                      <div className="bg-primary h-full rounded-full transition-all duration-500" style={{ width: `${c.pct}%` }} />
+                    </div>
                   </div>
-                  <div className="w-full bg-muted h-2.5 rounded-full overflow-hidden">
-                    <div className="bg-primary h-full rounded-full transition-all duration-500" style={{ width: `${c.pct}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : <p className="text-sm text-muted-foreground text-center py-10">Belum ada data</p>}
           </CardContent>
         </Card>
 
@@ -179,19 +194,28 @@ export default function AdminStatistik() {
           <CardContent className="p-5 relative">
             <div className="flex items-center gap-2 mb-4">
               <span className="material-symbols-outlined text-secondary">auto_awesome</span>
-              <h3 className="text-base font-semibold">Wawasan AI</h3>
+              <h3 className="text-base font-semibold">Wawasan</h3>
             </div>
-            <ul className="space-y-4">
-              {insights.map((item, i) => (
-                <li key={i} className="flex gap-3 text-sm">
-                  <span className="material-symbols-outlined text-secondary mt-0.5 text-[18px]">{item.icon}</span>
-                  <p>{item.text}</p>
+            {data ? (
+              <ul className="space-y-4 text-sm">
+                <li className="flex gap-3">
+                  <span className="material-symbols-outlined text-secondary mt-0.5 text-[18px]">search</span>
+                  <p><strong>{data.totalSearches}</strong> pencarian telah dilakukan oleh <strong>{data.locationDist.length}</strong> wilayah berbeda.</p>
                 </li>
-              ))}
-            </ul>
-            <button className="mt-6 w-full py-2.5 bg-secondary text-white rounded-lg text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">
-              Unduh Laporan Analitik Penuh
-            </button>
+                <li className="flex gap-3">
+                  <span className="material-symbols-outlined text-secondary mt-0.5 text-[18px]">trending_up</span>
+                  <p>Bulan ini <strong>{data.thisMonth}</strong> pencarian {data.growth > 0 ? `naik ${data.growth}%` : `turun ${Math.abs(data.growth)}%`} dibanding bulan lalu.</p>
+                </li>
+                <li className="flex gap-3">
+                  <span className="material-symbols-outlined text-secondary mt-0.5 text-[18px]">location_on</span>
+                  <p>Wilayah <strong>{data.topLocationName}</strong> paling sering dicari — fokus potensi UMKM di area ini.</p>
+                </li>
+                <li className="flex gap-3">
+                  <span className="material-symbols-outlined text-secondary mt-0.5 text-[18px]">category</span>
+                  <p>Kategori <strong>{data.topCategoryName}</strong> mendominasi dengan {data.topCategoryPct}% dari total pencarian.</p>
+                </li>
+              </ul>
+            ) : <p className="text-sm text-muted-foreground text-center py-4">Memuat data...</p>}
           </CardContent>
         </Card>
       </div>

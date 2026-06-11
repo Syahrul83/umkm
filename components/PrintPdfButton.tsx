@@ -54,8 +54,14 @@ export default function PrintPdfButton({ title, data, selectedIds, summary }: Pr
   }
 
   return (
-    <Button variant="outline" onClick={handlePrint} disabled={items.length === 0}>
-      🖨️ Cetak PDF {selectedIds ? `(${items.length})` : ""}
+    <Button
+      variant="default"
+      className="flex items-center gap-2 px-4"
+      onClick={handlePrint}
+      disabled={items.length === 0}
+    >
+      <span className="material-symbols-outlined text-[18px]">print</span>
+      Cetak PDF {selectedIds ? `(${items.length})` : ""}
     </Button>
   )
 }

@@ -1,8 +1,7 @@
 "use client"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
-import { Button } from "@/components/ui/button"
 
 const navItems = [
   { href: "/admin/overview", label: "Dashboard", icon: "grid_view" },
@@ -10,11 +9,11 @@ const navItems = [
   { href: "/admin/users", label: "User", icon: "group" },
   { href: "/admin/area-fokus", label: "Area Fokus", icon: "map" },
   { href: "/admin/reports", label: "Laporan", icon: "description" },
+  { href: "#", label: "Keluar", icon: "logout", isLogout: true },
 ]
 
 export default function AdminSidebar() {
   const pathname = usePathname()
-  const router = useRouter()
   const { data: session } = useSession()
   const user = session?.user as any
 
@@ -30,6 +29,18 @@ export default function AdminSidebar() {
       <nav className="flex-1 p-3 space-y-1">
         {navItems.map((item) => {
           const active = pathname === item.href
+          if (item.isLogout) {
+            return (
+              <button
+                key={item.label}
+                onClick={() => signOut()}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+              >
+                <span className="material-symbols-outlined text-[18px]">logout</span>
+                {item.label}
+              </button>
+            )
+          }
           return (
             <Link
               key={item.href}
@@ -48,7 +59,7 @@ export default function AdminSidebar() {
       </nav>
 
       <div className="p-4 border-t border-border">
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">
             {user?.name?.charAt(0) || user?.email?.charAt(0) || "A"}
           </div>
@@ -56,14 +67,6 @@ export default function AdminSidebar() {
             <p className="text-sm font-medium truncate">{user?.name || user?.email}</p>
             <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1 text-xs" onClick={() => router.push("/search")}>
-            Cari
-          </Button>
-          <Button variant="outline" size="sm" className="text-xs" onClick={() => signOut()}>
-            Keluar
-          </Button>
         </div>
       </div>
     </aside>

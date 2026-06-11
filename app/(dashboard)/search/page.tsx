@@ -172,8 +172,9 @@ export default function SearchPage() {
                       <option value="1000">1 km</option>
                       <option value="2000">2 km</option>
                     </select>
-                    <Button size="sm" onClick={() => handleSearch(marker.address, marker.address, marker.lat, marker.lng, parseInt(pinRadius))}>
-                      <span className="material-symbols-outlined text-[16px] mr-1">search</span>
+                    <Button size="default" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-sm font-medium"
+                      onClick={() => handleSearch(marker.address, marker.address, marker.lat, marker.lng, parseInt(pinRadius))}>
+                      <span className="material-symbols-outlined text-[18px] mr-1">search</span>
                       Cari area ini
                     </Button>
                   </div>
