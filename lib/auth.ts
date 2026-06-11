@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           args: [credentials.email as string],
         })
         const user = result.rows[0] as any
-        if (!user || !(await compare(credentials.password as string, user.password_hash))) {
+        if (!user || !(await compare(credentials.password as string, user.password_hash)) || user.is_active === 0) {
           return null
         }
         return { id: String(user.id), email: user.email, name: user.name, role: user.role }

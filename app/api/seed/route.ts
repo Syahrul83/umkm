@@ -16,6 +16,10 @@ export async function GET() {
     try {
       await db.execute("ALTER TABLE searches ADD COLUMN address TEXT DEFAULT ''")
     } catch {}
+    // Add is_active column if missing
+    try {
+      await db.execute("ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 1")
+    } catch {}
 
     // Seed admin user
     const existing = await db.execute({
