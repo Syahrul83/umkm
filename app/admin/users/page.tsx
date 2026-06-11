@@ -31,10 +31,13 @@ export default function AdminUsers() {
     fetch(`/api/admin/users?page=${page}&limit=10`)
       .then((r) => r.json())
       .then((data) => {
-        setUsers(data.rows)
-        setTotal(data.total)
-        setTotalPages(data.totalPages)
+        if (data.rows) {
+          setUsers(data.rows)
+          setTotal(data.total)
+          setTotalPages(data.totalPages)
+        }
       })
+      .catch(() => setUsers([]))
   }
 
   useEffect(() => { loadUsers() }, [page])
