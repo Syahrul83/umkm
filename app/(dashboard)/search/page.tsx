@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import SearchBar from "@/components/SearchBar"
 import MapView, { MapSkeleton } from "@/components/MapView"
 import StatCard from "@/components/StatCard"
@@ -8,6 +8,8 @@ import AIModal from "@/components/AIModal"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+const JAKARTA = { lat: -6.2088, lng: 106.8456 }
 
 interface SearchResult {
   places: any[]
@@ -23,9 +25,28 @@ export default function SearchPage() {
   const [result, setResult] = useState<SearchResult | null>(null)
   const [error, setError] = useState("")
   const [location, setLocation] = useState("")
-  const [coords, setCoords] = useState({ lat: 0, lng: 0 })
+  const [coords, setCoords] = useState(JAKARTA)
   const [marker, setMarker] = useState<{ lat: number; lng: number; address: string } | null>(null)
   const [pinRadius, setPinRadius] = useState("500")
+  const [locating, setLocating] = useState(true)
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setLocating(false)
+      return
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+        setLocating(false)
+      },
+      () => {
+        setCoords(JAKARTA)
+        setLocating(false)
+      },
+      { timeout: 5000, enableHighAccuracy: false }
+    )
+  }, [])
 
   async function handleSearch(loc: string, lat: number, lng: number, radius: number) {
     setLoading(true)
@@ -140,13 +161,13 @@ export default function SearchPage() {
         </div>
       )}
 
-      {!loading && !result && (
+      {!loading && !result && !locating && (
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-2">
             <div className="h-[500px]">
               <MapView
                 places={[]}
-                center={{ lat: -0.5022, lng: 117.1536 }}
+                center={coords}
                 onLocationSelect={handlePinSelect}
               />
             </div>
@@ -178,6 +199,13 @@ export default function SearchPage() {
             <p className="text-6xl mb-4">🗺️</p>
             <p>Cari lokasi atau klik peta untuk mulai</p>
           </div>
+        </div>
+      )}
+
+      {locating && (
+        <div className="text-center py-20 text-gray-400">
+          <div className="animate-spin text-4xl mb-4">⏳</div>
+          <p>Mendeteksi lokasi Anda...</p>
         </div>
       )}
     </div>
