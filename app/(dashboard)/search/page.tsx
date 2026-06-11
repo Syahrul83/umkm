@@ -80,8 +80,13 @@ export default function SearchPage() {
 
           <div className="flex items-center gap-2">
             {result && (
-              <Button variant="outline" size="sm" onClick={() => { setResult(null); setMarker(null); setError("") }}>
-                <span className="material-symbols-outlined text-[16px] mr-1">refresh</span>
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-secondary hover:bg-secondary/90 text-white px-6"
+                onClick={() => { setResult(null); setMarker(null); setError("") }}
+              >
+                <span className="material-symbols-outlined text-[18px] mr-1">refresh</span>
                 Cari Baru
               </Button>
             )}
