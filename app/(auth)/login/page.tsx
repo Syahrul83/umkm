@@ -29,7 +29,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <header className="bg-white border-b border-border sticky top-0 z-50">
         <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center">
-          <span className="text-lg font-bold tracking-tight">MapIde UMKM</span>
+          <span className="text-lg font-bold tracking-tight">MapIde <span className="text-secondary">UMKM</span></span>
         </div>
       </header>
 

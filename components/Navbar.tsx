@@ -9,7 +9,9 @@ export default function Navbar() {
 
   return (
     <nav className="border-b px-6 py-3 flex items-center justify-between bg-white">
-      <Link href="/search" className="font-bold text-xl text-blue-700">MapIde UMKM</Link>
+      <Link href="/search" className="font-bold text-xl">
+        MapIde <span className="text-secondary">UMKM</span>
+      </Link>
       <div className="flex items-center gap-4">
         {user?.role === "admin" ? (
           <>
