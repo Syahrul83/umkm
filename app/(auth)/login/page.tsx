@@ -106,8 +106,7 @@ export default function LoginPage() {
             </form>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              Belum punya akun?{" "}
-              <a href="/register" className="text-primary font-semibold hover:underline">Daftar</a>
+              Akun demo: <strong>admin@umkm.com</strong> / <strong>admin123</strong>
             </p>
           </div>
 
