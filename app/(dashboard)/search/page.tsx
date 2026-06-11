@@ -98,7 +98,16 @@ export default function SearchPage() {
         </p>
       </div>
 
-      <SearchBar onSearch={handleSearch} loading={loading} />
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <SearchBar onSearch={handleSearch} loading={loading} />
+        </div>
+        {result && (
+          <Button variant="outline" onClick={() => { setResult(null); setMarker(null); setError(""); }}>
+            🔄 Cari Baru
+          </Button>
+        )}
+      </div>
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">{error}</div>}
 
       {loading && <LoadingAnimation />}

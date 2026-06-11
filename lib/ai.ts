@@ -54,7 +54,14 @@ Konteks lokasi: ${context.location}
 Data usaha sekitar:
 ${JSON.stringify(context.places.slice(0, 10), null, 2)}
 
-Jawab dengan ramah dan informatif dalam Bahasa Indonesia.`
+Jawab dengan format WAJIB seperti ini:
+
+🎯 Rekomendasi 1: [nama usaha] — [alasan singkat]
+🎯 Rekomendasi 2: [nama usaha] — [alasan singkat]
+🎯 Rekomendasi 3: [nama usaha] — [alasan singkat]
+
+Setelah itu, akhiri dengan SARAN TAMBAHAN maksimal 1 kalimat.
+Tulis dalam Bahasa Indonesia yang ramah dan to the point.`
 
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
