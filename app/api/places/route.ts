@@ -13,6 +13,28 @@ export async function POST(req: Request) {
   const { lat, lng, radius, location } = await req.json()
   const user = session.user as any
 
+  const latRounded = Math.round(lat * 1000) / 1000
+  const lngRounded = Math.round(lng * 1000) / 1000
+
+  const cached = await db.execute({
+    sql: `SELECT sr.raw_places, sr.ai_analysis, sr.recommendations
+          FROM search_results sr
+          JOIN searches s ON s.id = sr.search_id
+          WHERE ROUND(s.lat, 3) = ? AND ROUND(s.lng, 3) = ? AND s.radius = ?
+          AND s.created_at > datetime('now', '-24 hours')
+          ORDER BY s.created_at DESC LIMIT 1`,
+    args: [latRounded, lngRounded, radius],
+  })
+
+  if (cached.rows[0]) {
+    const row = cached.rows[0] as any
+    return NextResponse.json({
+      places: JSON.parse(row.raw_places),
+      analysis: JSON.parse(row.ai_analysis),
+      cached: true,
+    })
+  }
+
   const places = await searchNearby(lat, lng, radius)
   const analysis = await analyzePlaces(places, location)
 
@@ -32,5 +54,5 @@ export async function POST(req: Request) {
     ],
   })
 
-  return NextResponse.json({ places, analysis })
+  return NextResponse.json({ places, analysis, cached: false })
 }

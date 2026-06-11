@@ -5,6 +5,7 @@ import MapView, { MapSkeleton } from "@/components/MapView"
 import StatCard from "@/components/StatCard"
 import RecommendationCard from "@/components/RecommendationCard"
 import AIModal from "@/components/AIModal"
+import LoadingAnimation from "@/components/LoadingAnimation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -100,19 +101,7 @@ export default function SearchPage() {
       <SearchBar onSearch={handleSearch} loading={loading} />
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">{error}</div>}
 
-      {loading && (
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-2"><MapSkeleton /></div>
-          <Card>
-            <CardHeader><CardTitle>Menganalisis...</CardTitle></CardHeader>
-            <CardContent className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-16 bg-gray-100 rounded animate-pulse" />
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {loading && <LoadingAnimation />}
 
       {result && (
         <div className="grid grid-cols-3 gap-4">
