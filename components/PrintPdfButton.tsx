@@ -5,47 +5,49 @@ interface PrintPdfButtonProps {
   title: string
   data: any[]
   selectedIds?: number[]
+  summary?: string
 }
 
-export default function PrintPdfButton({ title, data, selectedIds }: PrintPdfButtonProps) {
+export default function PrintPdfButton({ title, data, selectedIds, summary }: PrintPdfButtonProps) {
   const items = selectedIds ? data.filter((d) => selectedIds.includes(d.id)) : data
 
   async function handlePrint() {
     const { default: jsPDF } = await import("jspdf")
     const doc = new jsPDF()
-    doc.setFontSize(16)
-    doc.text(title, 14, 20)
-    doc.setFontSize(10)
+    let y = 20
 
-    let y = 30
+    doc.setFontSize(14)
+    doc.text(title, 14, y)
+    y += 8
+    doc.setFontSize(9)
+    if (summary) { doc.text(summary, 14, y); y += 6 }
+
+    const colW = [8, 32, 38, 14, 48, 30]
+    const headers = ["No", "User", "Lokasi", "Usaha", "Rekomendasi", "Tanggal"]
+
+    doc.setFontSize(8)
+    headers.forEach((h, i) => {
+      const x = 14 + colW.slice(0, i).reduce((a, b) => a + b, 0)
+      doc.text(h, x, y)
+    })
+    y += 4
+    doc.line(14, y - 1, 14 + colW.reduce((a, b) => a + b), y - 1)
+
     items.forEach((item, i) => {
-      if (y > 260) {
-        doc.addPage()
-        y = 20
-      }
-      doc.setFontSize(11)
-      doc.text(`${i + 1}. ${item.location}`, 14, y)
-      y += 6
-      doc.setFontSize(9)
-      if (item.address && item.address !== item.location) {
-        doc.text(`   📍 ${item.address}`, 14, y)
-        y += 5
-      }
-      doc.text(`   🏪 ${item.results_count || 0} usaha ditemukan`, 14, y)
-      y += 5
-      if (item.recommendations?.length) {
-        const recs = item.recommendations
-          .slice(0, 3)
-          .map((r: any) => r.business)
-          .join(", ")
-        doc.text(`   💡 ${recs}`, 14, y)
-        y += 5
-      }
-      const date = new Date(item.created_at).toLocaleDateString("id-ID", {
-        year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
+      if (y > 270) { doc.addPage(); y = 20 }
+      const vals = [
+        String(i + 1),
+        item.user_email || "-",
+        item.location,
+        String(item.results_count || 0),
+        (item.recommendations || []).slice(0, 2).map((r: any) => r.business).join(", "),
+        new Date(item.created_at).toLocaleDateString("id-ID", { month: "short", day: "numeric" }),
+      ]
+      vals.forEach((v, ci) => {
+        const x = 14 + colW.slice(0, ci).reduce((a, b) => a + b, 0)
+        doc.text(v.length > 18 ? v.slice(0, 17) + "…" : v, x, y)
       })
-      doc.text(`   📅 ${date}`, 14, y)
-      y += 10
+      y += 6
     })
 
     doc.save(`${title}.pdf`)
@@ -53,7 +55,7 @@ export default function PrintPdfButton({ title, data, selectedIds }: PrintPdfBut
 
   return (
     <Button variant="outline" onClick={handlePrint} disabled={items.length === 0}>
-      🖨️ Cetak PDF {selectedIds && `(${items.length})`}
+      🖨️ Cetak PDF {selectedIds ? `(${items.length})` : ""}
     </Button>
   )
 }
