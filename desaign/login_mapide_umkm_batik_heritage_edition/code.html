@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Masuk | MapIde UMKM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline": "#76777d",
+                    "outline-variant": "#c6c6cd",
+                    "inverse-primary": "#bec6e0",
+                    "tertiary": "#000000",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-dim": "#cbdbf5",
+                    "tertiary-fixed": "#e0e3e5",
+                    "primary-fixed": "#dae2fd",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "inverse-surface": "#213145",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "surface-bright": "#f8f9ff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-container": "#818486",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#45464d",
+                    "on-primary-container": "#7c839b",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "error": "#ba1a1a",
+                    "primary": "#000000",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-secondary-container": "#006f66",
+                    "secondary-fixed": "#89f5e7",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface": "#f8f9ff",
+                    "secondary": "#006a61",
+                    "primary-container": "#131b2e",
+                    "on-secondary-fixed": "#00201d",
+                    "secondary-container": "#86f2e4",
+                    "on-primary-fixed": "#131b2e",
+                    "tertiary-container": "#191c1e",
+                    "background": "#f8f9ff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "surface-container-low": "#eff4ff",
+                    "on-error": "#ffffff",
+                    "on-background": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "gutter": "1.5rem",
+                    "stack-lg": "2rem"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "12px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .login-card-shadow {
+            shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzYpWoeEJ5RJD25u3BKJn5c5hgtHgeH_d3OkNVjR03NvQBpdJCBqFg3Yd4ZA74k-lejW_u1uWPcCvgRYfxLE7I8qvJAKxAFVw9DZZXXEUPsR6EfgTniDDIdJ_SJru10qqsWRJ0Tx3sZ0CH-cF7az-dCV99j7fiStbcmi4aoUwA7LhZnaynKenvjtODBGdYySiKTcJdgVadYLSLAd4dWRyDD2tJRN2UmZUF1eSuENiA8z4Goj2SBmhua09IQ1Lr_y_vJqLLNg1PiVFv'); background-size: cover; background-attachment: fixed; background-position: center;">
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-2">
+<span class="text-headline-md font-headline-md font-bold text-on-surface">MapIde UMKM</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile py-stack-lg relative overflow-hidden">
+<!-- Subtle Ambient Background Element -->
+<!-- Login Section -->
+<section class="w-full max-w-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-lg shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 bg-white">
+<div class="mb-stack-lg text-center">
+<h1 class="text-headline-md font-headline-md text-on-surface mb-2">Selamat Datang</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Silakan masuk ke akun MapIde UMKM Anda</p>
+</div>
+<form class="space-y-stack-md" onsubmit="return false;">
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant ml-1" for="email">Email</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg text-body-md font-body-md placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" id="email" placeholder="nama@email.com" type="email"/>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center px-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="password">Kata Sandi</label>
+<a class="text-label-sm font-label-sm text-primary hover:underline" href="#">Lupa Sandi?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full pl-10 pr-10 py-3 bg-white border border-outline-variant rounded-lg text-body-md font-body-md placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-2 px-1">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" id="remember" type="checkbox"/>
+<label class="text-body-sm font-body-sm text-on-surface-variant cursor-pointer" for="remember">Ingat saya</label>
+</div>
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-bold text-body-md hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="submit">
+                        Masuk
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<p class="mt-stack-lg text-center text-body-sm font-body-sm text-on-surface-variant">
+                    Belum punya akun? <a class="text-primary font-bold hover:underline" href="#">Daftar</a>
+</p>
+</div>
+<!-- Footer Small Credits -->
+<div class="mt-stack-lg flex flex-wrap justify-center gap-x-6 gap-y-2 opacity-60">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span class="text-label-sm font-label-sm">Aman &amp; Terenkripsi</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="text-label-sm font-label-sm">Verifikasi UMKM</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant bg-white">
+<div class="w-full py-stack-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="text-label-md font-label-md font-bold text-on-surface">MapIde UMKM</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 MapIde UMKM. Pemberdayaan Pengusaha Lokal.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-stack-md">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Tentang Kami</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Bantuan</a>
+</nav>
+<div class="flex gap-stack-sm">
+<a class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</a>
+<a class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Form submission animation placeholder
+        document.querySelector('form').addEventListener('submit', (e) => {
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span>';
+            btn.classList.add('opacity-80', 'pointer-events-none');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.remove('opacity-80', 'pointer-events-none');
+                alert('Fungsionalitas login akan segera hadir!');
+            }, 1500);
+        });
+    </script>
+</body></html>

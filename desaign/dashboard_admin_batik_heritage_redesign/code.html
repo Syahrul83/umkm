@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Admin | MapIde UMKM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005049",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bec6e0",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-container": "#818486",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary": "#000000",
+                        "on-primary-container": "#7c839b",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-surface": "#0b1c30",
+                        "surface-tint": "#565e74",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "inverse-surface": "#213145",
+                        "surface-variant": "#d3e4fe",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#45464d",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "primary-container": "#131b2e",
+                        "on-secondary-container": "#006f66",
+                        "outline": "#76777d",
+                        "on-secondary-fixed": "#00201d",
+                        "tertiary": "#000000",
+                        "error": "#ba1a1a",
+                        "on-background": "#0b1c30",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "background": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "secondary-fixed": "#89f5e7",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dae2fd",
+                        "tertiary-container": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#131b2e",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#006a61",
+                        "outline-variant": "#c6c6cd",
+                        "secondary-container": "#86f2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "container-max": "1280px",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-md": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "12px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-item-active {
+            @apply bg-surface-container-high text-primary font-bold;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 1);
+        }
+        .batik-bg {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLun1nxDFVuL0rGJj53fBeeuiu-cZFFRpRCr5_Ck3Z1UaAFZWEMivn2ksAM5uZ_CyX_HxzZTPR9I15P_bvFNkktG8-aHVHu3U0w3fLl_oqTDJDWeSvs1fkQwur8KGhlurti6VRMcbMOQRf8rgZyWhbVzfkjvYh_n_LinVaFmxBTbYiH-qhpvMypsZeWTsM_Yhme-tOxwoFydGXH9LNUZqbQ0iPCpsDS13tpC9xOksgMbVN995o7eAsfZCj3-');
+            background-repeat: repeat;
+            background-size: 400px;
+            opacity: 0.05;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<div class="batik-bg"></div>
+<header class="fixed top-0 left-0 right-0 h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline z-50">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter h-full flex justify-between items-center">
+<div class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                MapIde UMKM
+            </div>
+<nav class="hidden md:flex items-center gap-stack-lg">
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-3 py-2 rounded-lg font-body-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-3 py-2 rounded-lg font-body-md" href="#">User</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-3 py-2 rounded-lg font-body-md" href="#">Laporan</a>
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary px-3 py-2 font-body-md" href="#">Admin</a>
+<button class="ml-4 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md hover:opacity-80 transition-opacity">Keluar</button>
+</nav>
+<button class="md:hidden p-2 text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<div class="flex pt-16 flex-1 max-w-container-max mx-auto w-full">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 border-r border-outline-variant p-gutter sticky top-16 h-[calc(100vh-4rem)]">
+<div class="space-y-stack-sm">
+<div class="flex items-center gap-3 p-3 rounded-lg text-primary bg-surface-container-high font-bold cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Ringkasan</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Statistik</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Manajemen User</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined">map</span>
+<span class="text-body-md font-body-md">Area Fokus</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Pengaturan</span>
+</div>
+</div>
+<div class="mt-auto p-4 glass-card rounded-xl border border-outline-variant flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Super Admin</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">admin@mapide.id</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-margin-mobile md:p-gutter overflow-hidden">
+<div class="flex justify-between items-center mb-stack-lg">
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Dashboard Admin</h1>
+<div class="flex gap-stack-sm">
+<button class="px-4 py-2 glass-card rounded-lg flex items-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="text-label-md font-label-md">7 Hari Terakhir</span>
+</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="text-label-md font-label-md">Ekspor Data</span>
+</button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-stack-md mb-stack-lg">
+<!-- KPI Card 1 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-label-sm font-label-sm">Total User</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary">3</div>
+<div class="text-[10px] text-green-600 font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> +2%
+                    </div>
+</div>
+<!-- KPI Card 2 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px]">search</span>
+<span class="text-label-sm font-label-sm">Total Pencarian</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary">8</div>
+<div class="text-[10px] text-green-600 font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> +15%
+                    </div>
+</div>
+<!-- KPI Card 3 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="text-label-sm font-label-sm">Lokasi Unik</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary">8</div>
+<div class="text-[10px] text-on-surface-variant font-bold flex items-center gap-1">Stabil</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+<span class="text-label-sm font-label-sm">Rata-rata Usaha</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary">20</div>
+<div class="text-[10px] text-on-surface-variant font-bold flex items-center gap-1">Harian</div>
+</div>
+<!-- KPI Card 5 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm border-l-4 border-l-green-500">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px] text-green-600">check_circle</span>
+<span class="text-label-sm font-label-sm">Aktif</span>
+</div>
+<div class="text-headline-md font-headline-md text-green-600">3</div>
+<div class="text-[10px] text-green-600 font-bold uppercase">Online</div>
+</div>
+<!-- KPI Card 6 -->
+<div class="glass-card p-4 rounded-xl flex flex-col gap-1 shadow-sm border-l-4 border-l-red-500">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-[20px] text-red-600">block</span>
+<span class="text-label-sm font-label-sm">Diblokir</span>
+</div>
+<div class="text-headline-md font-headline-md text-red-600">0</div>
+<div class="text-[10px] text-on-surface-variant font-bold">Clear</div>
+</div>
+</div>
+<!-- Bento Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-stack-md mb-stack-lg">
+<!-- Line Chart -->
+<div class="lg:col-span-7 glass-card p-gutter rounded-xl shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+<h3 class="text-headline-md font-headline-md">Pencarian 7 Hari Terakhir</h3>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Update: 5 mnt lalu</span>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-4 pb-8 border-b border-outline-variant relative">
+<!-- Chart Grid Lines -->
+<div class="absolute inset-x-0 top-0 h-px bg-outline-variant opacity-20"></div>
+<div class="absolute inset-x-0 top-1/4 h-px bg-outline-variant opacity-20"></div>
+<div class="absolute inset-x-0 top-2/4 h-px bg-outline-variant opacity-20"></div>
+<div class="absolute inset-x-0 top-3/4 h-px bg-outline-variant opacity-20"></div>
+<!-- Simple Simulated Bar Chart -->
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 40%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Sen</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 65%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Sel</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 55%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Rab</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 85%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Kam</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 45%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Jum</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all hover:bg-primary" style="height: 30%"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Sab</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full group">
+<div class="w-full bg-primary rounded-t-lg transition-all" style="height: 95%"></div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Min</span>
+</div>
+</div>
+</div>
+<!-- Horizontal Bar Chart -->
+<div class="lg:col-span-5 glass-card p-gutter rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">sell</span>
+<h3 class="text-headline-md font-headline-md">Kategori Paling Dicari</h3>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-label-md font-label-md">
+<span>Restoran</span>
+<span class="font-bold">14</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 85%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-md font-label-md">
+<span>Retail</span>
+<span class="font-bold">12</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 70%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-md font-label-md">
+<span>Layanan Jasa</span>
+<span class="font-bold">8</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 45%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-md font-label-md">
+<span>Kopi &amp; Cafe</span>
+<span class="font-bold">6</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 35%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-md font-label-md">
+<span>Otomotif</span>
+<span class="font-bold">4</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 20%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Lists Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md mb-stack-lg">
+<!-- Top Lokasi -->
+<div class="glass-card p-gutter rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">location_city</span>
+<h3 class="text-body-lg font-bold">Top Lokasi</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="text-body-sm font-body-sm">Samarinda Kota</span>
+<span class="bg-surface-variant px-2 py-1 rounded text-label-sm font-label-sm">12x</span>
+</li>
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="text-body-sm font-body-sm truncate pr-4">Jl. Slamet Riyadi No.19</span>
+<span class="bg-surface-variant px-2 py-1 rounded text-label-sm font-label-sm">8x</span>
+</li>
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="text-body-sm font-body-sm">Palaran</span>
+<span class="bg-surface-variant px-2 py-1 rounded text-label-sm font-label-sm">5x</span>
+</li>
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="text-body-sm font-body-sm">Samarinda Seberang</span>
+<span class="bg-surface-variant px-2 py-1 rounded text-label-sm font-label-sm">3x</span>
+</li>
+</ul>
+</div>
+<!-- Overcrowded Categories -->
+<div class="glass-card p-gutter rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error">warning</span>
+<h3 class="text-body-lg font-bold">Kategori Jenuh</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center justify-between p-2 rounded-lg border border-error-container bg-error-container/10">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-body-sm font-semibold text-error">Cafe &amp; Kopi</span>
+</div>
+<span class="text-label-sm font-label-sm text-error font-bold">Sangat Tinggi</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded-lg border border-orange-200 bg-orange-50">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-body-sm font-semibold text-orange-700">Restoran Cepat Saji</span>
+</div>
+<span class="text-label-sm font-label-sm text-orange-700 font-bold">Tinggi</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded-lg border border-orange-200 bg-orange-50">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-body-sm font-semibold text-orange-700">Minimarket</span>
+</div>
+<span class="text-label-sm font-label-sm text-orange-700 font-bold">Tinggi</span>
+</li>
+</ul>
+</div>
+<!-- Top Rekomendasi AI -->
+<div class="glass-card p-gutter rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+<h3 class="text-body-lg font-bold">Rekomendasi AI</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex gap-3 items-center">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="text-label-sm">01</span>
+</div>
+<div class="flex-1">
+<p class="text-label-md font-bold">Laundry Kiloan Premium</p>
+<p class="text-label-sm text-on-surface-variant">Potensi: Tinggi</p>
+</div>
+</li>
+<li class="flex gap-3 items-center">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="text-label-sm">02</span>
+</div>
+<div class="flex-1">
+<p class="text-label-md font-bold">Oleh-oleh Khas Lokal</p>
+<p class="text-label-sm text-on-surface-variant">Potensi: Sedang</p>
+</div>
+</li>
+<li class="flex gap-3 items-center">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="text-label-sm">03</span>
+</div>
+<div class="flex-1">
+<p class="text-label-md font-bold">Bengkel Elektronik</p>
+<p class="text-label-sm text-on-surface-variant">Potensi: Tinggi</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- User Paling Aktif -->
+<div class="glass-card p-gutter rounded-xl shadow-sm mb-stack-lg">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">emoji_events</span>
+<h3 class="text-headline-md font-headline-md">User Paling Aktif</h3>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-16 h-16 rounded-full border-2 border-primary object-cover" data-alt="A professional studio portrait of a modern entrepreneur with a friendly smile, set against a clean, minimalist white background. The lighting is soft and even, highlighting sharp features and a confident expression. The overall aesthetic is corporate but accessible, maintaining the high-end Sovereign SME visual language of trust and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7Ybeq_HH_pYlhNhiIPyhmwv2tEshUwxmJBdVxIOnNF6UngB-3jFuxuA8-SqRiT6UOalvqFytXACcNFlbPWNggAe6QzTEC01703NtQpiJIk7Qh4jmFJwdXLLPrR4EjAH8t9zdnHWG49fDss_A23DteEt15KiRwBWysUInqaqnJj48KLAxkHLZnlghmOZCjqq7a7jXlENfru62gUIzuruAJ0rrDs0fsLkV4SYhW91techD2kUIWfe1ajSgqaooX_09-XH9nlZPJ2FS"/>
+<div class="absolute -bottom-1 -right-1 bg-yellow-500 text-white p-1 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+</div>
+<div>
+<p class="text-body-lg font-bold">User Demo</p>
+<p class="text-body-sm text-on-surface-variant">user.demo@email.com</p>
+</div>
+</div>
+<div class="flex gap-gutter">
+<div class="text-center">
+<p class="text-headline-md font-headline-md text-primary">8</p>
+<p class="text-label-sm text-on-surface-variant">Pencarian</p>
+</div>
+<div class="text-center">
+<p class="text-headline-md font-headline-md text-primary">12</p>
+<p class="text-label-sm text-on-surface-variant">Simpan Ide</p>
+</div>
+<div class="text-center">
+<p class="text-headline-md font-headline-md text-primary">100%</p>
+<p class="text-label-sm text-on-surface-variant">Skor Aktif</p>
+</div>
+</div>
+<button class="px-6 py-2 glass-card rounded-lg hover:bg-primary hover:text-on-primary transition-all duration-300">
+                        Lihat Profil
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline mt-auto">
+<div class="w-full py-stack-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="text-label-md font-label-md font-bold text-on-surface">MapIde UMKM</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">
+                © 2024 MapIde UMKM. Pemberdayaan Pengusaha Lokal.
+            </div>
+<div class="flex gap-stack-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Tentang Kami</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Kebijakan Privasi</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Bantuan</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.boxShadow = '0 10px 15px -3px rgb(0 0 0 / 0.1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.05)';
+            });
+            card.style.transition = 'all 0.3s ease';
+        });
+    </script>
+</body></html>

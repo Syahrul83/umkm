@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Area Fokus - MapIde UMKM Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#006f66",
+                    "on-background": "#0b1c30",
+                    "tertiary-fixed": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#191c1e",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-surface": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "primary-fixed-dim": "#bec6e0",
+                    "surface-dim": "#cbdbf5",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed": "#89f5e7",
+                    "secondary-container": "#86f2e4",
+                    "on-secondary-fixed-variant": "#005049",
+                    "surface-bright": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary": "#006a61",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-highest": "#d3e4fe",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#dce9ff",
+                    "inverse-primary": "#bec6e0",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "primary-fixed": "#dae2fd",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#c6c6cd",
+                    "surface-tint": "#565e74",
+                    "outline": "#76777d",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-surface": "#213145",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-container": "#818486",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary": "#000000",
+                    "on-surface-variant": "#45464d",
+                    "on-secondary-fixed": "#00201d",
+                    "on-primary-container": "#7c839b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "margin-mobile": "1rem",
+                    "container-max": "1280px",
+                    "stack-lg": "2rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "12px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .batik-pattern {
+            background-image: url("https://www.transparenttextures.com/patterns/batik.png");
+            opacity: 0.03;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="text-on-background bg-background overflow-x-hidden">
+<!-- Subtle Batik Overlay from {{DATA:SCREEN:SCREEN_13}} context -->
+<div class="fixed inset-0 batik-pattern pointer-events-none z-0"></div>
+<!-- SideNavBar (Left Anchor) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-surface-container dark:bg-primary-container border-r border-outline-variant dark:border-outline shadow-md w-64">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-black text-on-primary-fixed leading-tight">Admin Panel</h1>
+<p class="text-xs text-on-surface-variant opacity-70">SME Empowerment</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Ringkasan
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">analytics</span> Statistik
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant px-4 py-3 hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span> Manajemen User
+            </a>
+<a class="flex items-center gap-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg px-4 py-3 font-label-md text-label-md shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span> Area Fokus
+            </a>
+</nav>
+<div class="mt-auto space-y-2">
+<button class="w-full bg-primary text-white py-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 mb-4">
+<span class="material-symbols-outlined">add</span> Tambah Data UMKM
+            </button>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span> Bantuan
+            </a>
+<a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-error-container/20 rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span> Keluar
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 relative z-10 flex flex-col min-h-screen">
+<!-- TopNavBar (Top Anchor) -->
+<header class="sticky top-0 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm z-30 h-16 flex items-center px-gutter w-full">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">MapIde UMKM</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">User</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">Laporan</a>
+<a class="text-primary dark:text-secondary-fixed border-b-2 border-primary dark:border-secondary-fixed pb-1 font-body-md text-body-md" href="#">Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all w-64" placeholder="Cari wilayah..." type="text"/>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<img alt="Admin Profile Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJM-f2qxa0oPIvaBsPtrzeVHp7BW70OH8t6yZ2hxuIXBFpV0XUqQZlD9aH66akyJ5NwP5kHlVX0ckr0fd2nvscvfYYEDojg_FWaH-P3-qwDuYYQI1oy60G0fkiklV6drNjg0j-UMGotWDLxLHl1vHdLa7SQzLtI-tbOs2i3CuBP8D0rWeDkcN1Av-BKoWTyBPdyk1lG6XnEXTfzJDEqdEzOK6m8Li4BYWDCk6LIzPf5Ao3oaj5fnJy1lJ7Z7Q6KnzLWhzeI0zQW1Ao"/>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="p-8 space-y-8 flex-1">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Analisis Area Fokus</h2>
+<p class="text-on-surface-variant font-body-md text-body-md max-w-2xl">Identifikasi wilayah potensial dan kepadatan UMKM di Samarinda dan sekitarnya untuk optimasi distribusi bantuan.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-white border border-outline-variant px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter Peta
+                    </button>
+<button class="flex items-center gap-2 bg-white border border-outline-variant px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span> Ekspor Laporan
+                    </button>
+</div>
+</section>
+<!-- Map & Metrics Container (Bento Layout) -->
+<section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- Interactive Map Component -->
+<div class="lg:col-span-3 h-[600px] glass-card rounded-xl overflow-hidden shadow-md relative group">
+<div class="absolute inset-0 z-0 bg-slate-100">
+<!-- Mock Map with data-location -->
+<div class="w-full h-full grayscale-[0.2] contrast-[1.1]" data-location="Samarinda, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnk8fXQuBUrp8wCKPLkDTiDDXfoR36WKbA2F5_6i9jTkHUmnl6FR86idV4EEl5OUHh6AMFF1preIc4R60jMUTDb7z8M-JlKhJTiuyws3ULGTjhTU6PEKHNk1E_ehMTXEVlzvdpFHs0Rx0P6WJbW9Oy7_K7sIMwy4fZAnDMgMy-QTE51L_C5i-b-MGKE1ou8Ioadce3q-cEHUivIpZcE-4xJvd9ee8wqJRv_Qj8fJ-AP_7oVyQtSteVtF8euG_vzIEHkYMjK3sBcOgB'); background-size: cover; background-position: center;">
+<!-- Overlay for Map Styling -->
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<!-- Heatmap Pins / Clusters -->
+<div class="absolute top-[30%] left-[45%] group/pin">
+<div class="w-12 h-12 bg-error/40 rounded-full animate-pulse flex items-center justify-center">
+<div class="w-4 h-4 bg-error rounded-full border-2 border-white shadow-lg"></div>
+</div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-on-surface text-white px-3 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity">Samarinda Utara: 1,245 UMKM</div>
+</div>
+<div class="absolute top-[60%] left-[25%] group/pin">
+<div class="w-16 h-16 bg-secondary/30 rounded-full animate-pulse flex items-center justify-center">
+<div class="w-4 h-4 bg-secondary rounded-full border-2 border-white shadow-lg"></div>
+</div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-on-surface text-white px-3 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity">Palaran: Potensi Tinggi</div>
+</div>
+<div class="absolute top-[50%] left-[70%] group/pin">
+<div class="w-8 h-8 bg-primary/30 rounded-full flex items-center justify-center">
+<div class="w-4 h-4 bg-primary rounded-full border-2 border-white shadow-lg"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Map UI Overlays -->
+<div class="absolute top-4 left-4 flex flex-col gap-2">
+<div class="bg-white/90 backdrop-blur-md p-1 rounded-lg border border-outline-variant shadow-sm flex flex-col gap-1">
+<button class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded"><span class="material-symbols-outlined text-xl">add</span></button>
+<div class="h-[1px] bg-outline-variant mx-1"></div>
+<button class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded"><span class="material-symbols-outlined text-xl">remove</span></button>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-outline-variant shadow-lg max-w-xs">
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Legenda Kepadatan</h4>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs">
+<span>Rendah</span>
+<div class="flex-1 mx-2 h-2 rounded-full bg-gradient-to-r from-secondary-fixed to-error"></div>
+<span>Tinggi</span>
+</div>
+<p class="text-[10px] text-on-surface-variant">Update terakhir: 12 Menit yang lalu</p>
+</div>
+</div>
+</div>
+<!-- Area Metrics Sidebar -->
+<div class="lg:col-span-1 space-y-6">
+<div class="glass-card p-6 rounded-xl shadow-sm space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Wilayah Terpadat</h3>
+</div>
+<div>
+<p class="text-3xl font-black text-on-surface">Samarinda Utara</p>
+<p class="text-on-surface-variant text-sm mt-1"><span class="font-bold text-error">1,245</span> UMKM Terdaftar</p>
+</div>
+<div class="pt-4 border-t border-outline-variant/50">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Kapasitas Maksimal</span>
+<span class="font-bold">92%</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-2">
+<div class="bg-error h-full rounded-full w-[92%]"></div>
+</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl shadow-sm space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Wilayah Potensial</h3>
+</div>
+<div>
+<p class="text-3xl font-black text-on-surface">Palaran</p>
+<p class="text-on-surface-variant text-sm mt-1">Saturasi Rendah, Pertumbuhan <span class="font-bold text-secondary">+12.4%</span></p>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Cocok untuk sektor industri kreatif dan manufaktur skala mikro.</p>
+</div>
+<div class="glass-card p-6 rounded-xl shadow-sm bg-primary-container text-white">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-secondary-fixed">construction</span>
+<h3 class="font-label-md text-label-md text-on-primary-fixed uppercase tracking-wider">Prioritas Infrastruktur</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<div class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary-fixed"></div>
+<p class="text-sm">Peningkatan Akses Logistik Samarinda Seberang</p>
+</li>
+<li class="flex items-start gap-3">
+<div class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary-fixed"></div>
+<p class="text-sm">Digitalisasi Pasar Pagi Area</p>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Bottom Analysis Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12">
+<!-- Kepadatan vs Saturasi Card -->
+<div class="glass-card rounded-xl p-6 shadow-sm overflow-hidden flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Kepadatan vs Saturasi</h3>
+<select class="bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-0">
+<option>Per Kecamatan</option>
+<option>Per Kelurahan</option>
+</select>
+</div>
+<div class="flex-1 space-y-4">
+<!-- Custom Table / Chart Look -->
+<div class="space-y-4">
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Samarinda Utara</span>
+<span class="text-xs text-on-surface-variant">Sangat Padat</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<span class="text-sm font-bold">1,245 unit</span>
+<div class="w-32 bg-slate-100 h-1.5 rounded-full mt-1">
+<div class="bg-error h-full rounded-full w-full"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-error opacity-0 group-hover:opacity-100 transition-opacity">warning</span>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Samarinda Seberang</span>
+<span class="text-xs text-on-surface-variant">Normal</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<span class="text-sm font-bold">842 unit</span>
+<div class="w-32 bg-slate-100 h-1.5 rounded-full mt-1">
+<div class="bg-primary h-full rounded-full w-[65%]"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">info</span>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Palaran</span>
+<span class="text-xs text-on-surface-variant">Potensial</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<span class="text-sm font-bold">312 unit</span>
+<div class="w-32 bg-slate-100 h-1.5 rounded-full mt-1">
+<div class="bg-secondary h-full rounded-full w-[25%]"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">auto_awesome</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Strategic Recommendation Card -->
+<div class="glass-card rounded-xl p-6 shadow-sm border-l-4 border-l-secondary relative overflow-hidden flex flex-col">
+<!-- Subtle AI Wave Background -->
+<div class="absolute top-0 right-0 w-32 h-32 opacity-5 translate-x-10 -translate-y-10">
+<span class="material-symbols-outlined text-[120px]">smart_toy</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Rekomendasi Strategis AI</h3>
+</div>
+<div class="flex-1 bg-secondary-container/20 rounded-xl p-5 border border-secondary/10">
+<p class="text-on-secondary-container font-body-md text-body-md leading-relaxed italic">
+                            "Berdasarkan analisis data bulan ini, wilayah <strong>Samarinda Utara</strong> telah mencapai titik jenuh untuk bisnis kuliner. Disarankan untuk mengalihkan insentif program pemberdayaan ke wilayah <strong>Palaran</strong> dan <strong>Loa Janan Ilir</strong> dengan fokus pada UMKM berbasis manufaktur rumah tangga. Selain itu, percepatan pembangunan gerai logistik bersama di <strong>Samarinda Seberang</strong> akan menurunkan biaya operasional UMKM sebesar 15%."
+                        </p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Reviewer 1" class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Close up portrait of a male professional executive in a bright minimalist office environment with soft natural lighting and a serious but confident expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDszV8M8mZrcJXpmr4q0dntM25UdBb2pU3kLrBqlyhJ0vtksT67q6-49cmcd4Ifj4Zd7y5ZH7fs84i4Xli0m7GLdyOKYVJ_ujQt1M7d4kpsRp7ZZRgrYDH2y14Ubceaub1j2GZ-qrwSVEYbvpPu_qy_mF83mqzrdFhkGt1p78wx6Q3Roxow07OZtdIjE4qfwSxPIMRUTFeKitF7d-DoU1Q9gX0kwK_UESmcensksv96MMZtjUiJV_i3YnBDCEz6MTojCIrD9lu41Cu"/>
+<img alt="Reviewer 2" class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Portrait of a diverse professional woman in a modern corporate setting with warm ambient lighting and a friendly expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjuiCAvqiLfA3SylGx3dZ8mSJaz80LwmCNlUrTtMdXLrBmAZV8L2XiDO2Jz1pjLBOX5I-BAA86KZgUrFfRNSf6awO27XVsPZfvLf-j3fdyT6muyRsZNoQiVe4DmtxIiYfTVVFfkAJpsQuHquOUtpzVR5aFovLCnvp06VQ-mf1EeL1RsKrbe9jjwwMa1_kXPp5tLaYcpg21gY_RwP24mJrgjmf-3vkf-G2oaN-WggplPHH--OQV4c8MFdPbwQSXQY7mln7kJYmAjsPf"/>
+</div>
+<button class="bg-secondary text-white px-6 py-2 rounded-lg font-label-md text-label-md hover:shadow-lg hover:brightness-110 transition-all flex items-center gap-2">
+                            Terapkan Strategi <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Branding (Administrative) -->
+<footer class="mt-auto py-6 px-8 border-t border-outline-variant/30 flex justify-between items-center">
+<div class="flex items-center gap-4 opacity-40">
+<span class="font-bold text-sm">MAPIDE UMKM v2.4</span>
+<span class="text-xs">© 2024 Pemerintah Kota Samarinda</span>
+</div>
+<div class="flex gap-4 text-xs text-on-surface-variant font-medium">
+<a class="hover:text-primary" href="#">Kebijakan Privasi</a>
+<a class="hover:text-primary" href="#">Ketentuan Layanan</a>
+<a class="hover:text-primary" href="#">Log Aktivitas</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple scale effect for navigation items
+        document.querySelectorAll('nav a, aside a, button').forEach(el => {
+            el.addEventListener('mousedown', () => el.classList.add('scale-95'));
+            el.addEventListener('mouseup', () => el.classList.remove('scale-95'));
+            el.addEventListener('mouseleave', () => el.classList.remove('scale-95'));
+        });
+
+        // Mock tooltip behavior
+        const pinLabels = [
+            "Samarinda Utara: Kepadatan Tinggi",
+            "Palaran: Rekomendasi Investasi",
+            "Samarinda Seberang: Hub Logistik"
+        ];
+    </script>
+</body></html>

@@ -53,11 +53,11 @@ export default function AdminReports() {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-4">
+    <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Laporan Pencarian</h1>
-          <p className="text-sm text-gray-500">{total} pencarian · {selectedIds.length} dipilih</p>
+          <h1 className="text-2xl font-bold tracking-tight">Laporan Pencarian</h1>
+          <p className="text-sm text-muted-foreground">{total} pencarian · {selectedIds.length} dipilih</p>
         </div>
         <PrintPdfButton
           title={`Laporan Pencarian${from ? " — " + from + " s/d " + (to || "sekarang") : ""}`}

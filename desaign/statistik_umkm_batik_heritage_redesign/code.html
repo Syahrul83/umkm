@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MapIde UMKM - Statistik Pertumbuhan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#bec6e0",
+                        "background": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-surface": "#0b1c30",
+                        "inverse-surface": "#213145",
+                        "surface-dim": "#cbdbf5",
+                        "secondary-container": "#86f2e4",
+                        "on-primary-fixed": "#131b2e",
+                        "on-secondary-fixed-variant": "#005049",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "surface": "#f8f9ff",
+                        "inverse-primary": "#bec6e0",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-variant": "#d3e4fe",
+                        "outline-variant": "#c6c6cd",
+                        "tertiary": "#000000",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed": "#dae2fd",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-background": "#0b1c30",
+                        "tertiary-container": "#191c1e",
+                        "on-secondary-container": "#006f66",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "outline": "#76777d",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#89f5e7",
+                        "on-tertiary-container": "#818486",
+                        "on-primary-container": "#7c839b",
+                        "primary-container": "#131b2e",
+                        "surface-container-high": "#dce9ff",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#00201d",
+                        "surface-tint": "#565e74",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "secondary": "#006a61",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1280px",
+                        "stack-lg": "2rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "12px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .batik-overlay {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLun1nxDFVuL0rGJj53fBeeuiu-cZFFRpRCr5_Ck3Z1UaAFZWEMivn2ksAM5uZ_CyX_HxzZTPR9I15P_bvFNkktG8-aHVHu3U0w3fLl_oqTDJDWeSvs1fkQwur8KGhlurti6VRMcbMOQRf8rgZyWhbVzfkjvYh_n_LinVaFmxBTbYiH-qhpvMypsZeWTsM_Yhme-tOxwoFydGXH9LNUZqbQ0iPCpsDS13tpC9xOksgMbVN995o7eAsfZCj3-');
+            background-size: 600px;
+            background-repeat: repeat;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .chart-bar { transition: height 1s ease-out; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col relative">
+<div class="fixed inset-0 batik-overlay z-0"></div>
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16">
+<div class="text-headline-md font-headline-md font-bold text-on-surface">MapIde UMKM</div>
+<nav class="hidden md:flex items-center gap-8 h-full">
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-2 h-full flex items-center" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-2 h-full flex items-center" href="#">User</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-2 h-full flex items-center" href="#">Laporan</a>
+<a class="text-primary font-bold border-b-2 border-primary px-2 h-full flex items-center" href="#">Admin</a>
+<button class="ml-4 px-4 py-2 text-label-md font-label-md bg-primary text-on-primary rounded-lg hover:opacity-90 active:opacity-80 transition-all">Keluar</button>
+</nav>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 w-full max-w-container-max mx-auto relative z-10">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 border-r border-outline-variant pt-stack-lg gap-stack-sm bg-surface/50 backdrop-blur-sm">
+<div class="px-gutter text-label-sm font-label-sm text-outline uppercase tracking-wider mb-2">Main Menu</div>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-md">Ringkasan</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 bg-primary-container text-on-primary-container border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-md">Statistik</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md">Manajemen User</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-label-md">Area Fokus</span>
+</a>
+<div class="mt-auto px-gutter py-stack-lg">
+<a class="flex items-center gap-3 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Pengaturan</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-margin-mobile md:p-gutter overflow-y-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md mb-stack-lg">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Statistik Pertumbuhan UMKM</h1>
+<p class="text-body-md text-on-surface-variant">Analisis komprehensif perkembangan bisnis lokal periode ini.</p>
+</div>
+<div class="flex items-center gap-stack-sm bg-surface-container-lowest border border-outline-variant p-2 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-outline">calendar_today</span>
+<select class="bg-transparent border-none text-label-md font-label-md focus:ring-0 cursor-pointer">
+<option>30 Hari Terakhir</option>
+<option>3 Bulan Terakhir</option>
+<option>Tahun Ini</option>
+</select>
+</div>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-stack-md mb-stack-lg">
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-outline uppercase">Bisnis Baru</span>
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-1 rounded">storefront</span>
+</div>
+<div class="text-headline-md font-headline-md">1.284</div>
+<div class="flex items-center gap-1 text-secondary text-label-sm mt-2">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>12% vs bulan lalu</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-outline uppercase">Tingkat Pertumbuhan</span>
+<span class="material-symbols-outlined text-secondary bg-secondary-container p-1 rounded">query_stats</span>
+</div>
+<div class="text-headline-md font-headline-md">8.4%</div>
+<div class="flex items-center gap-1 text-secondary text-label-sm mt-2">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>2.1% peningkatan</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-outline uppercase">Wilayah Teraktif</span>
+<span class="material-symbols-outlined text-on-surface bg-surface-container-high p-1 rounded">explore</span>
+</div>
+<div class="text-headline-md font-headline-md">Samarinda</div>
+<div class="text-label-sm text-on-surface-variant mt-2">420 Registrasi baru</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-outline uppercase">Kategori Unggulan</span>
+<span class="material-symbols-outlined text-error bg-error-container p-1 rounded">military_tech</span>
+</div>
+<div class="text-headline-md font-headline-md">Kuliner</div>
+<div class="text-label-sm text-on-surface-variant mt-2">35% dari total UMKM</div>
+</div>
+</div>
+<!-- Main Visualizations Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-lg mb-stack-lg">
+<!-- Large Line Chart Placeholder -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center mb-stack-lg">
+<h3 class="text-headline-md font-headline-md">Tren Registrasi UMKM</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2"><div class="w-3 h-3 bg-primary rounded-full"></div><span class="text-label-sm">Tahun Ini</span></div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 bg-primary-fixed-dim rounded-full"></div><span class="text-label-sm">Tahun Lalu</span></div>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 relative px-4">
+<!-- Simulated Chart Grid -->
+<div class="absolute inset-0 border-b border-l border-outline-variant/30 flex flex-col justify-between">
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+</div>
+<!-- Bars/Points representing trend -->
+<div class="flex-1 bg-primary/10 rounded-t-lg h-32 relative group cursor-pointer hover:bg-primary/20 transition-all">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-primary text-on-primary text-[10px] px-2 py-1 rounded hidden group-hover:block">120</div>
+</div>
+<div class="flex-1 bg-primary/10 rounded-t-lg h-48 relative group cursor-pointer hover:bg-primary/20 transition-all"></div>
+<div class="flex-1 bg-primary/10 rounded-t-lg h-40 relative group cursor-pointer hover:bg-primary/20 transition-all"></div>
+<div class="flex-1 bg-primary/10 rounded-t-lg h-56 relative group cursor-pointer hover:bg-primary/20 transition-all"></div>
+<div class="flex-1 bg-primary/10 rounded-t-lg h-60 relative group cursor-pointer hover:bg-primary/20 transition-all"></div>
+<div class="flex-1 bg-primary/10 rounded-t-lg h-44 relative group cursor-pointer hover:bg-primary/20 transition-all"></div>
+<div class="flex-1 bg-primary rounded-t-lg h-64 relative group cursor-pointer">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary text-label-sm px-2 py-1 rounded">Aktual: 342</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-label-sm text-outline">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>Mei</span><span>Jun</span><span>Jul</span>
+</div>
+</div>
+<!-- Pie Chart Distribution -->
+<div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm">
+<h3 class="text-headline-md font-headline-md mb-stack-lg">Distribusi Wilayah</h3>
+<div class="flex flex-col items-center justify-center gap-stack-lg">
+<div class="relative w-48 h-48">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-high" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="100.48" stroke-linecap="round" stroke-width="12"></circle>
+<circle class="text-secondary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="200.96" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-headline-md font-bold">10+</span>
+<span class="text-label-sm text-outline">Kota</span>
+</div>
+</div>
+<div class="w-full space-y-3">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-primary rounded-full"></div><span class="text-body-sm">Samarinda</span></div>
+<span class="text-label-md">60%</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-secondary rounded-full"></div><span class="text-body-sm">Balikpapan</span></div>
+<span class="text-label-md">25%</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-surface-container-high rounded-full"></div><span class="text-body-sm">Lainnya</span></div>
+<span class="text-label-md">15%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Categories and Insights -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg">
+<!-- Bar Chart: Categories -->
+<div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm">
+<h3 class="text-headline-md font-headline-md mb-stack-lg">Kategori UMKM Terpopuler</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-label-md mb-1"><span>Makanan &amp; Minuman</span><span>45%</span></div>
+<div class="w-full bg-surface-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-1"><span>Retail &amp; Dagang</span><span>28%</span></div>
+<div class="w-full bg-surface-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[28%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-1"><span>Jasa Kreatif</span><span>15%</span></div>
+<div class="w-full bg-surface-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[15%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-1"><span>Teknologi &amp; Digital</span><span>12%</span></div>
+<div class="w-full bg-surface-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[12%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insights Section -->
+<div class="bg-primary-container text-on-primary-container p-stack-lg rounded-xl border border-primary/20 shadow-lg relative overflow-hidden">
+<!-- Subtle batik background inside AI card -->
+<div class="absolute inset-0 batik-overlay opacity-5"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary-fixed">auto_awesome</span>
+<h3 class="text-headline-md font-headline-md">Wawasan AI</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim mt-1">lightbulb</span>
+<p class="text-body-md">Sektor **Kuliner** di Samarinda Utara menunjukkan saturasi tinggi. Disarankan memberikan insentif untuk sektor **Logistik** guna menyeimbangkan ekosistem.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim mt-1">trending_up</span>
+<p class="text-body-md">Prediksi pertumbuhan bulan depan mencapai **+5.2%**, didorong oleh peluncuran program hibah daerah baru.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim mt-1">priority_high</span>
+<p class="text-body-md">Terdapat anomali data pendaftaran di wilayah Balikpapan Timur yang memerlukan verifikasi manual segera.</p>
+</li>
+</ul>
+<button class="mt-6 w-full py-3 bg-secondary text-on-secondary rounded-lg font-label-md hover:opacity-90 active:scale-[0.98] transition-all">Unduh Laporan Analitik Penuh</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant relative z-10">
+<div class="w-full py-stack-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="text-label-md font-label-md font-bold text-on-surface">MapIde UMKM</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">
+                © 2024 MapIde UMKM. Pemberdayaan Pengusaha Lokal.
+            </div>
+<div class="flex gap-6">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Bantuan</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privasi</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Kontak</a>
+</div>
+</div>
+</footer>
+<script>
+        // Optional micro-interaction: Animate cards on entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bg-surface-container-lowest');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body></html>

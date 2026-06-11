@@ -98,11 +98,11 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Kelola User</h1>
-          <p className="text-sm text-gray-500">{total} user terdaftar</p>
+          <h1 className="text-2xl font-bold tracking-tight">Kelola User</h1>
+          <p className="text-sm text-muted-foreground">{total} user terdaftar</p>
         </div>
         <Dialog open={openAdd} onOpenChange={setOpenAdd}>
           <DialogTrigger render={<Button />}>+ Tambah User</DialogTrigger>
