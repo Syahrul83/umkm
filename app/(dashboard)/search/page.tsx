@@ -146,7 +146,7 @@ export default function SearchPage() {
             <div className="h-[500px]">
               <MapView
                 places={[]}
-                center={{ lat: -2.5489, lng: 118.0149 }}
+                center={{ lat: -0.5022, lng: 117.1536 }}
                 onLocationSelect={handlePinSelect}
               />
             </div>

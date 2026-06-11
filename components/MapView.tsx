@@ -14,9 +14,13 @@ function loadGoogleMaps(): Promise<void> {
       resolve()
       return
     }
-    const existing = document.querySelector('script[src*="maps.googleapis"]')
-    if (existing) {
-      existing.addEventListener("load", () => resolve())
+    if (document.querySelector('script[src*="maps.googleapis"]')) {
+      const check = setInterval(() => {
+        if (window.google?.maps) {
+          clearInterval(check)
+          resolve()
+        }
+      }, 100)
       return
     }
     const script = document.createElement("script")
@@ -38,7 +42,10 @@ export default function MapView({ places, center, onLocationSelect }: MapViewPro
   const mapInstance = useRef<any>(null)
   const markersRef = useRef<any[]>([])
   const selectMarkerRef = useRef<any>(null)
+  const onSelectRef = useRef(onLocationSelect)
   const [apiReady, setApiReady] = useState(false)
+
+  onSelectRef.current = onLocationSelect
 
   useEffect(() => {
     loadGoogleMaps().then(() => setApiReady(true))
@@ -46,48 +53,42 @@ export default function MapView({ places, center, onLocationSelect }: MapViewPro
 
   useEffect(() => {
     if (!apiReady || !mapRef.current) return
-    mapInstance.current = new window.google.maps.Map(mapRef.current, {
+    const map = new window.google.maps.Map(mapRef.current, {
       center,
-      zoom: 15,
+      zoom: 13,
       mapTypeControl: false,
       streetViewControl: false,
+      zoomControl: true,
     })
+    mapInstance.current = map
 
-    if (onLocationSelect) {
-      mapInstance.current.addListener("click", (e: any) => {
-        const lat = e.latLng.lat()
-        const lng = e.latLng.lng()
-        placeSelectMarker(lat, lng)
-        onLocationSelect(lat, lng)
-      })
-    }
+    map.addListener("click", (e: any) => {
+      const lat = e.latLng.lat()
+      const lng = e.latLng.lng()
+      if (selectMarkerRef.current) {
+        selectMarkerRef.current.setPosition({ lat, lng })
+      } else {
+        const marker = new window.google.maps.Marker({
+          position: { lat, lng },
+          map,
+          draggable: true,
+          animation: window.google.maps.Animation.DROP,
+          label: { text: "📍", fontSize: "20px" },
+        })
+        marker.addListener("dragend", () => {
+          const pos = marker.getPosition()
+          if (pos) onSelectRef.current?.(pos.lat(), pos.lng())
+        })
+        selectMarkerRef.current = marker
+      }
+      onSelectRef.current?.(lat, lng)
+    })
   }, [apiReady])
 
-  function placeSelectMarker(lat: number, lng: number) {
-    if (selectMarkerRef.current) {
-      selectMarkerRef.current.setPosition({ lat, lng })
-      return
-    }
-    selectMarkerRef.current = new window.google.maps.Marker({
-      position: { lat, lng },
-      map: mapInstance.current,
-      draggable: true,
-      animation: window.google.maps.Animation.DROP,
-      icon: {
-        path: window.google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: "#2563eb",
-        fillOpacity: 1,
-        strokeColor: "#ffffff",
-        strokeWeight: 3,
-      },
-      title: "Seret untuk pindah lokasi",
-    })
-    selectMarkerRef.current.addListener("dragend", () => {
-      const pos = selectMarkerRef.current.getPosition()
-      if (pos && onLocationSelect) onLocationSelect(pos.lat(), pos.lng())
-    })
-  }
+  useEffect(() => {
+    if (!mapInstance.current) return
+    mapInstance.current.setCenter(center)
+  }, [center.lat, center.lng])
 
   useEffect(() => {
     if (!mapInstance.current || !window.google) return
