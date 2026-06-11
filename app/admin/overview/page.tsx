@@ -36,10 +36,26 @@ export default function AdminOverview() {
 
   if (!stats) return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold">Dashboard Admin</h1>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="h-8 w-48 shimmer mb-2" />
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Card key={i}><CardContent className="p-4 h-24 bg-gray-100 animate-pulse rounded-lg" /></Card>
+          <Card key={i}><CardContent className="p-4 space-y-2">
+            <div className="h-3 w-16 shimmer" />
+            <div className="h-7 w-12 shimmer mt-2" />
+          </CardContent></Card>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[1, 2].map((i) => (
+          <Card key={i}><CardContent className="p-6"><div className="h-[220px] shimmer" /></CardContent></Card>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <Card key={i}><CardHeader><div className="h-4 w-32 shimmer" /></CardHeader>
+          <CardContent className="space-y-2">
+            {[1, 2, 3, 4].map((j) => <div key={j} className="h-4 w-full shimmer" />)}
+          </CardContent></Card>
         ))}
       </div>
     </div>
