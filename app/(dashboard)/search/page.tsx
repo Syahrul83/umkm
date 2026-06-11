@@ -92,9 +92,9 @@ export default function SearchPage() {
   return (
     <div className="p-6 space-y-4 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold mb-1">Cari Peluang Usaha</h1>
-        <p className="text-sm text-gray-500">
-          Ketik lokasi di search bar, atau klik peta untuk tentukan lokasi
+        <h1 className="text-2xl font-bold tracking-tight">Cari Peluang Usaha</h1>
+        <p className="text-sm text-muted-foreground">
+          Ketik lokasi atau klik peta untuk analisis kompetitor dan rekomendasi
         </p>
       </div>
 
@@ -108,7 +108,7 @@ export default function SearchPage() {
           </Button>
         )}
       </div>
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">{error}</div>}
+      {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive rounded-lg p-3 text-sm">{error}</div>}
 
       {loading && <LoadingAnimation />}
 
@@ -122,8 +122,8 @@ export default function SearchPage() {
           </div>
 
           <div className="space-y-4">
-            <Card>
-              <CardHeader><CardTitle>📊 Statistik Usaha</CardTitle></CardHeader>
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader><CardTitle className="text-sm font-semibold">Statistik Usaha</CardTitle></CardHeader>
               <CardContent className="space-y-3">
                 {result.analysis?.stats?.map((s: any) => (
                   <StatCard
@@ -141,9 +141,9 @@ export default function SearchPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-border/50 shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>💡 Rekomendasi</CardTitle>
+                <CardTitle className="text-sm font-semibold">Rekomendasi</CardTitle>
                 <AIModal location={location} places={result.places} />
               </CardHeader>
               <CardContent className="space-y-2">
@@ -193,16 +193,16 @@ export default function SearchPage() {
               </div>
             )}
           </div>
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-6xl mb-4">🗺️</p>
+          <div className="text-center py-16 text-muted-foreground">
+            <span className="material-symbols-outlined text-5xl mb-3 block">map</span>
             <p>Cari lokasi atau klik peta untuk mulai</p>
           </div>
         </div>
       )}
 
       {locating && (
-        <div className="text-center py-20 text-gray-400">
-          <div className="animate-spin text-4xl mb-4">⏳</div>
+        <div className="text-center py-16 text-muted-foreground">
+          <span className="material-symbols-outlined text-4xl mb-3 block animate-spin">progress_activity</span>
           <p>Mendeteksi lokasi Anda...</p>
         </div>
       )}

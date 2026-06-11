@@ -49,8 +49,8 @@ export default function HistoryPage() {
     <div className="p-6 space-y-4 max-w-4xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Riwayat Pencarian</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-2xl font-bold tracking-tight">Riwayat Pencarian</h1>
+          <p className="text-sm text-muted-foreground">
             {total} pencarian · {selectedIds.length} dipilih
           </p>
         </div>
@@ -70,8 +70,8 @@ export default function HistoryPage() {
       )}
 
       {items.length === 0 ? (
-        <div className="text-center py-20 text-gray-400">
-          <p className="text-5xl mb-4">📋</p>
+        <div className="text-center py-16 text-muted-foreground">
+          <span className="material-symbols-outlined text-5xl mb-3 block">history</span>
           <p>Belum ada riwayat pencarian.</p>
         </div>
       ) : (
