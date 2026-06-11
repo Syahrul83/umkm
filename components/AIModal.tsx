@@ -52,8 +52,9 @@ export default function AIModal({ location, places }: AIModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button variant="outline" />}>
-        💬 Tanya AI
+      <DialogTrigger render={<Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-5" />}>
+        <span className="material-symbols-outlined text-[18px]">forum</span>
+        Tanya AI
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

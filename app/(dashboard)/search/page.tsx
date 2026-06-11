@@ -70,8 +70,10 @@ export default function SearchPage() {
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 space-y-6">
           <header>
             <h1 className="text-2xl font-bold tracking-tight">Cari Peluang Usaha</h1>
-            <p className="text-sm text-muted-foreground">
-              Ketik lokasi di search bar, atau klik peta untuk tentukan lokasi ideal bisnis Anda.
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              🔍 <strong>Cara pakai:</strong> Ketik nama lokasi (jalan/kecamatan/kota) lalu klik <strong>Cari</strong>, 
+              atau langsung <strong>klik peta</strong> untuk menandai titik lalu tekan <strong>"Cari area ini"</strong>. 
+              AI akan menganalisis kompetitor dan memberi 3 rekomendasi usaha terbaik.
             </p>
           </header>
 
