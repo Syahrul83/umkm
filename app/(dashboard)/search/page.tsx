@@ -49,7 +49,7 @@ export default function SearchPage() {
     )
   }, [])
 
-  async function handleSearch(loc: string, lat: number, lng: number, radius: number) {
+  async function handleSearch(loc: string, addr: string, lat: number, lng: number, radius: number) {
     setLoading(true)
     setError("")
     setLocation(loc)
@@ -61,7 +61,7 @@ export default function SearchPage() {
       const res = await fetch("/api/places", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lat, lng, radius, location: loc }),
+        body: JSON.stringify({ lat, lng, radius, location: loc, address: addr }),
       })
       const data = await res.json()
       if (data.error) {
@@ -185,7 +185,7 @@ export default function SearchPage() {
                 <Button
                   size="sm"
                   onClick={() =>
-                    handleSearch(marker.address, marker.lat, marker.lng, parseInt(pinRadius))
+                    handleSearch(marker.address, marker.address, marker.lat, marker.lng, parseInt(pinRadius))
                   }
                 >
                   🔍 Cari area ini

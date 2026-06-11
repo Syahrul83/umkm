@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  const { lat, lng, radius, location } = await req.json()
+  const { lat, lng, radius, location, address } = await req.json()
   const user = session.user as any
 
   const latRounded = Math.round(lat * 1000) / 1000
@@ -39,8 +39,8 @@ export async function POST(req: Request) {
   const analysis = await analyzePlaces(places, location)
 
   const searchResult = await db.execute({
-    sql: "INSERT INTO searches (user_id, location, lat, lng, radius, results_count) VALUES (?, ?, ?, ?, ?, ?) RETURNING id",
-    args: [parseInt(user.id), location, lat, lng, radius, places.length],
+    sql: "INSERT INTO searches (user_id, location, address, lat, lng, radius, results_count) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id",
+    args: [parseInt(user.id), location, address || location, lat, lng, radius, places.length],
   })
   const searchId = searchResult.rows[0]?.id as number
 

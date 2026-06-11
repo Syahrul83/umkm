@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface SearchBarProps {
-  onSearch: (location: string, lat: number, lng: number, radius: number) => void
+  onSearch: (location: string, address: string, lat: number, lng: number, radius: number) => void
   loading: boolean
 }
 
@@ -24,7 +24,7 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
     })
     const data = await res.json()
     if (data.lat && data.lng) {
-      onSearch(location, data.lat, data.lng, parseInt(radius))
+      onSearch(location, data.address || location, data.lat, data.lng, parseInt(radius))
     } else {
       setError(data.error || "Lokasi tidak ditemukan")
     }

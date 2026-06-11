@@ -11,8 +11,9 @@ export async function GET() {
   const user = session.user as any
 
   const result = await db.execute({
-    sql: `SELECT s.id, s.location, s.results_count, s.created_at, 
-          COALESCE(sr.recommendations, '[]') as recommendations
+    sql: `SELECT s.id, s.location, s.address, s.results_count, s.created_at,
+          COALESCE(sr.recommendations, '[]') as recommendations,
+          COALESCE(sr.ai_analysis, '{}') as ai_analysis
           FROM searches s
           LEFT JOIN search_results sr ON sr.search_id = s.id
           WHERE s.user_id = ?
@@ -21,5 +22,11 @@ export async function GET() {
     args: [parseInt(user.id)],
   })
 
-  return NextResponse.json(result.rows)
+  const rows = result.rows.map((r: any) => ({
+    ...r,
+    recommendations: JSON.parse(r.recommendations || "[]"),
+    analysis: JSON.parse(r.ai_analysis || "{}"),
+  }))
+
+  return NextResponse.json(rows)
 }

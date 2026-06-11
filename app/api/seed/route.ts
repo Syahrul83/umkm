@@ -12,6 +12,10 @@ export async function GET() {
     for (const stmt of statements) {
       await db.execute(stmt)
     }
+    // Add address column if missing (for existing databases)
+    try {
+      await db.execute("ALTER TABLE searches ADD COLUMN address TEXT DEFAULT ''")
+    } catch {}
 
     // Seed admin user
     const existing = await db.execute({
