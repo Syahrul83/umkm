@@ -1,0 +1,350 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MapIde UMKM - Cari Peluang Usaha</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#00201d",
+                    "surface-tint": "#565e74",
+                    "primary-fixed-dim": "#bec6e0",
+                    "surface-bright": "#f8f9ff",
+                    "primary": "#000000",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#76777d",
+                    "on-secondary-container": "#006f66",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#89f5e7",
+                    "inverse-primary": "#bec6e0",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#005049",
+                    "surface": "#f8f9ff",
+                    "secondary-container": "#86f2e4",
+                    "surface-container-high": "#dce9ff",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#191c1e",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-background": "#0b1c30",
+                    "on-surface": "#0b1c30",
+                    "on-primary-container": "#7c839b",
+                    "surface-dim": "#cbdbf5",
+                    "outline-variant": "#c6c6cd",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-container": "#818486",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "tertiary": "#000000",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary-fixed": "#dae2fd",
+                    "on-surface-variant": "#45464d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary": "#006a61",
+                    "on-primary-fixed": "#131b2e",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#131b2e",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "gutter": "1.5rem",
+                    "container-max": "1280px",
+                    "stack-lg": "2rem",
+                    "margin-mobile": "1rem"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "12px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .batik-overlay {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLun1nxDFVuL0rGJj53fBeeuiu-cZFFRpRCr5_Ck3Z1UaAFZWEMivn2ksAM5uZ_CyX_HxzZTPR9I15P_bvFNkktG8-aHVHu3U0w3fLl_oqTDJDWeSvs1fkQwur8KGhlurti6VRMcbMOQRf8rgZyWhbVzfkjvYh_n_LinVaFmxBTbYiH-qhpvMypsZeWTsM_Yhme-tOxwoFydGXH9LNUZqbQ0iPCpsDS13tpC9xOksgMbVN995o7eAsfZCj3-');
+            background-repeat: repeat;
+            opacity: 0.05;
+        }
+        .map-container {
+            min-height: 600px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida/AP1WRLun1nxDFVuL0rGJj53fBeeuiu-cZFFRpRCr5_Ck3Z1UaAFZWEMivn2ksAM5uZ_CyX_HxzZTPR9I15P_bvFNkktG8-aHVHu3U0w3fLl_oqTDJDWeSvs1fkQwur8KGhlurti6VRMcbMOQRf8rgZyWhbVzfkjvYh_n_LinVaFmxBTbYiH-qhpvMypsZeWTsM_Yhme-tOxwoFydGXH9LNUZqbQ0iPCpsDS13tpC9xOksgMbVN995o7eAsfZCj3-&quot;); background-size: cover; background-attachment: fixed; background-position: center center;">
+<!-- TopAppBar -->
+<nav class="sticky top-0 z-50 bg-surface border-b border-outline-variant h-16">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-full">
+<div class="text-headline-md font-headline-md font-bold text-on-surface">MapIde UMKM</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary py-2 font-label-md text-label-md" href="#">Cari</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-3 py-2 rounded font-label-md text-label-md" href="#">Riwayat</a>
+<a class="text-on-surface-variant hover:bg-surface-container transition-colors px-3 py-2 rounded font-label-md text-label-md" href="#">User Demo</a>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md active:opacity-80 transition-all">Keluar</button>
+</div>
+<button class="md:hidden material-symbols-outlined">menu</button>
+</div>
+</nav>
+<main class="relative min-h-screen">
+<!-- Background Decor -->
+
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-stack-lg relative z-10">
+<!-- Header Section -->
+<header class="mb-stack-lg">
+<h1 class="text-headline-lg font-headline-lg text-on-background mb-2">Cari Peluang Usaha</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Ketik lokasi di search bar, atau klik peta untuk tentukan lokasi ideal bisnis Anda.</p>
+</header>
+<!-- Search Hero Section -->
+<section class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl shadow-sm mb-stack-lg">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+<div class="md:col-span-7 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-surface-container-high outline-none transition-all font-body-md" placeholder="Cari lokasi (jalan/kecamatan/kota)..." type="text">
+</div>
+<div class="md:col-span-2 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">distance</span>
+<select class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant focus:border-primary outline-none bg-white appearance-none font-body-md">
+<option>500 m</option>
+<option>1 km</option>
+<option>2.5 km</option>
+<option>5 km</option>
+</select>
+</div>
+<div class="md:col-span-3 flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                            Cari
+                        </button>
+<button class="bg-surface-container text-on-surface-variant p-3 rounded-lg hover:bg-surface-variant transition-all border border-outline-variant flex items-center justify-center" title="Reset">
+<span class="material-symbols-outlined">restart_alt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left: Map Interaction -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-md map-container relative">
+<!-- Simulated Map Interface -->
+<div class="absolute inset-0 bg-slate-100" data-location="Samarinda">
+<img alt="Map showing Samarinda city center with business density hotspots highlighted with red and orange markers" class="w-full h-full object-cover grayscale-[0.2]" data-alt="A detailed digital map interface of Samarinda city, focusing on the urban center and riverbank. The map uses a clean, modern aesthetic with a soft blue and white color palette. Dozens of glowing red and orange map pins are clustered in high-activity areas, indicating business density. Subtle UI elements like zoom controls and a mini-map are visible in the corners, maintaining a professional GIS dashboard feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKfJDn2ORKE5JEdnGfqNlmkD659m2_Ugs9gH3D8fCS8DBPn0alFN_yHPemEWdyS8mwqjQ_s9dEPldTnMmKI6lWEq-H42I7Pw81TxnqNTpLhEQHIAc7Epm-PQbdJq_wxMdBOzFGHU2tcUtLM57dNjfAnOMhHyo6HRkw-OS_VXVwspPUSocmpSquJ932blWzLI4l_8iulu5uzEXemzXaj1CakMjswCXChgtrl5dgGPsjWdYvJM3869wnRxiQir4U4ZJF5Y70fRNYI1wN">
+</div>
+<!-- Map Overlays -->
+<div class="absolute top-4 right-4 flex flex-col gap-2">
+<button class="bg-white p-2 rounded shadow-sm border border-outline-variant hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">layers</span>
+</button>
+<button class="bg-white p-2 rounded shadow-sm border border-outline-variant hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- Floating Density Legend -->
+<div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md p-3 rounded-lg border border-outline-variant text-body-sm shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm">Saturasi Tinggi</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm">Peluang Tinggi</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center text-body-sm text-on-surface-variant italic">
+<span class="">* 20 usaha ditemukan di area terpilih</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">info</span> Terakhir diperbarui: 5 menit yang lalu</span>
+</div>
+</div>
+<!-- Right: Stats & AI -->
+<div class="lg:col-span-4 flex flex-col gap-8">
+<!-- Business Statistics -->
+<section class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">bar_chart</span>
+<h2 class="text-headline-md font-headline-md">Statistik Usaha</h2>
+</div>
+<div class="space-y-6">
+<!-- Stat Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md">Restoran</span>
+<span class="text-error font-label-sm text-label-sm bg-error-container px-2 py-0.5 rounded">Padat</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 85%"></div>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span class="">5 usaha</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-yellow-500 filled-icon" style="font-variation-settings: 'FILL' 1;">star</span> 4.3</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md">Toko Kelontong</span>
+<span class="text-error font-label-sm text-label-sm bg-error-container px-2 py-0.5 rounded">Padat</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 70%"></div>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span class="">4 usaha</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-yellow-500 filled-icon" style="font-variation-settings: 'FILL' 1;">star</span> 4.2</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md">Apotek</span>
+<span class="text-secondary font-label-sm text-label-sm bg-secondary-container px-2 py-0.5 rounded">Terbuka</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 25%"></div>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span class="">2 usaha</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-yellow-500 filled-icon" style="font-variation-settings: 'FILL' 1;">star</span> 4.0</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 text-primary border border-outline py-2 rounded-lg hover:bg-surface-container transition-all font-label-md text-label-md">Lihat Semua Kategori</button>
+</section>
+<!-- AI Recommendations -->
+<section class="bg-white border border-primary/20 rounded-xl p-6 shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[80px]">auto_awesome</span>
+</div>
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">lightbulb</span>
+<h2 class="text-headline-md font-headline-md">Rekomendasi AI</h2>
+</div>
+<button class="bg-primary/5 text-primary px-3 py-1.5 rounded-full flex items-center gap-1 text-label-sm font-label-sm border border-primary/10">
+<span class="material-symbols-outlined text-[14px]">forum</span> Tanya AI
+                            </button>
+</div>
+<div class="space-y-4">
+<!-- Rec Card -->
+<div class="p-4 border-l-4 border-secondary bg-surface-container-low rounded-r-lg group hover:bg-surface-container transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold">Laundry Kiloan</h3>
+<span class="bg-secondary text-white px-2 py-1 rounded text-label-sm">90/100</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Tidak ada kompetitor laundry khusus di radius 500m, permintaan stabil dari area kos-kosan sekitar.</p>
+</div>
+<div class="p-4 border-l-4 border-primary bg-surface-container-low rounded-r-lg group hover:bg-surface-container transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold">Oleh-oleh Khas</h3>
+<span class="bg-primary text-white px-2 py-1 rounded text-label-sm">85/100</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Dekat dengan landmark wisata, potensi besar untuk menarik pengunjung luar kota.</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant mt-stack-lg">
+<div class="w-full py-stack-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-label-md font-label-md font-bold text-on-surface mb-2">MapIde UMKM</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">
+                    © 2024 MapIde UMKM. Pemberdayaan Pengusaha Lokal.
+                </p>
+</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">Tentang Kami</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">Bantuan</a>
+</div>
+</div>
+</footer>
+<!-- Mobile FAB -->
+<button class="md:hidden fixed bottom-6 right-6 bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined">search</span>
+</button>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateX(4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Simple mock search behavior
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchBtn = document.querySelector('button.bg-primary');
+        
+        searchBtn.addEventListener('click', () => {
+            if(searchInput.value) {
+                const btnContent = searchBtn.innerHTML;
+                searchBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">sync</span> Mencari...';
+                searchBtn.disabled = true;
+                
+                setTimeout(() => {
+                    searchBtn.innerHTML = btnContent;
+                    searchBtn.disabled = false;
+                }, 1500);
+            }
+        });
+    </script>
+
+
+</body></html>

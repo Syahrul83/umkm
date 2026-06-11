@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 
 interface RecommendationCardProps {
   rank: number
@@ -8,19 +7,18 @@ interface RecommendationCardProps {
   reason: string
 }
 
-const medals = ["🥇", "🥈", "🥉"]
-
 export default function RecommendationCard({ rank, business, score, reason }: RecommendationCardProps) {
+  const borderColor = rank === 1 ? "border-l-secondary" : "border-l-primary"
+
   return (
-    <Card className={`border-l-4 ${rank === 1 ? "border-l-green-500" : rank === 2 ? "border-l-blue-500" : "border-l-yellow-500"}`}>
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">{medals[rank - 1]}</span>
-          <span className="font-semibold">{business}</span>
-          <Badge variant="secondary" className="ml-auto">{score}/100</Badge>
-        </div>
-        <p className="text-sm text-gray-500 mt-1">{reason}</p>
-      </CardContent>
-    </Card>
+    <div className={`p-4 border-l-4 ${borderColor} bg-muted/30 rounded-r-lg hover:bg-muted/50 transition-all cursor-pointer`}>
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="font-semibold text-base">{business}</h3>
+        <span className={`text-xs font-medium px-2 py-1 rounded text-white ${rank === 1 ? "bg-secondary" : "bg-primary"}`}>
+          {score}/100
+        </span>
+      </div>
+      <p className="text-sm text-muted-foreground">{reason}</p>
+    </div>
   )
 }
