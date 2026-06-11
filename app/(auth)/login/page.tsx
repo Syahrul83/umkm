@@ -104,10 +104,6 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
-
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              Akun demo: <strong>admin@umkm.com</strong> / <strong>admin123</strong>
-            </p>
           </div>
 
           <div className="mt-6 flex justify-center gap-6 opacity-60">
