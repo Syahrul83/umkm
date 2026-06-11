@@ -18,7 +18,13 @@ export default function LoginPage() {
     if (res?.error) {
       setError("Email atau password salah")
     } else {
-      router.push("/search")
+      const session = await fetch("/api/auth/session").then(r => r.json())
+      const role = session?.user?.role
+      if (role === "admin") {
+        router.push("/admin/overview")
+      } else {
+        router.push("/search")
+      }
     }
   }
 

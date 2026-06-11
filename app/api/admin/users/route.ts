@@ -1,13 +1,20 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { auth } from "@/lib/auth"
+import { hash } from "bcryptjs"
 
-export async function GET() {
+async function checkAdmin() {
   const session = await auth()
   const user = session?.user as any
   if (!user || user.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return null
   }
+  return user
+}
+
+export async function GET() {
+  const admin = await checkAdmin()
+  if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const result = await db.execute(`
     SELECT u.id, u.name, u.email, u.role, u.created_at,
@@ -19,4 +26,32 @@ export async function GET() {
   `)
 
   return NextResponse.json(result.rows)
+}
+
+export async function POST(req: Request) {
+  const admin = await checkAdmin()
+  if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  const { name, email, password, role } = await req.json()
+
+  if (!email || !password) {
+    return NextResponse.json({ message: "Email dan password wajib diisi" }, { status: 400 })
+  }
+
+  const existing = await db.execute({
+    sql: "SELECT id FROM users WHERE email = ?",
+    args: [email],
+  })
+  if (existing.rows.length > 0) {
+    return NextResponse.json({ message: "Email sudah terdaftar" }, { status: 400 })
+  }
+
+  const validRole = role === "admin" ? "admin" : "user"
+  const password_hash = await hash(password, 10)
+  await db.execute({
+    sql: "INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)",
+    args: [name || "", email, password_hash, validRole],
+  })
+
+  return NextResponse.json({ success: true, message: "User berhasil dibuat" })
 }
