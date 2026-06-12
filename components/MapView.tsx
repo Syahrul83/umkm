@@ -10,24 +10,22 @@ declare global {
 
 function loadGoogleMaps(): Promise<void> {
   return new Promise((resolve) => {
-    if (typeof window !== "undefined" && window.google?.maps) {
+    if (typeof window !== "undefined" && window.google?.maps?.Map) {
       resolve()
       return
     }
-    if (document.querySelector('script[src*="maps.googleapis"]')) {
-      const check = setInterval(() => {
-        if (window.google?.maps) {
-          clearInterval(check)
-          resolve()
-        }
-      }, 100)
-      return
+    if (!document.querySelector('script[src*="maps.googleapis"]')) {
+      const script = document.createElement("script")
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
+      script.async = true
+      document.head.appendChild(script)
     }
-    const script = document.createElement("script")
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
-    script.async = true
-    script.onload = () => resolve()
-    document.head.appendChild(script)
+    const check = setInterval(() => {
+      if (window.google?.maps?.Map) {
+        clearInterval(check)
+        resolve()
+      }
+    }, 100)
   })
 }
 
