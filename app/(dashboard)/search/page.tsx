@@ -17,11 +17,12 @@ interface SearchResult {
     stats: { category: string; count: number; avgRating: number; percentage: number }[]
     overcrowded: string[]
     recommendations: { rank: number; business: string; score: number; reason: string }[]
-  }
+  } | null
 }
 
 export default function SearchPage() {
   const [loading, setLoading] = useState(false)
+  const [aiLoading, setAiLoading] = useState(false)
   const [result, setResult] = useState<SearchResult | null>(null)
   const [error, setError] = useState("")
   const [location, setLocation] = useState("")
@@ -40,17 +41,29 @@ export default function SearchPage() {
   }, [])
 
   async function handleSearch(loc: string, addr: string, lat: number, lng: number, radius: number) {
-    setLoading(true); setError(""); setLocation(loc); setCoords({ lat, lng }); setResult(null); setMarker(null)
+    setLoading(true); setAiLoading(true); setError(""); setLocation(loc); setCoords({ lat, lng }); setResult(null); setMarker(null)
     try {
-      const res = await fetch("/api/places", {
+      // Step 1: Map First — cepat (~3 detik)
+      const nearbyRes = await fetch("/api/places/nearby", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lat, lng, radius, location: loc, address: addr }),
       })
-      const data = await res.json()
-      if (data.error) setError(data.error)
-      else setResult(data)
+      const nearbyData = await nearbyRes.json()
+      if (nearbyData.error) { setError(nearbyData.error); setLoading(false); setAiLoading(false); return }
+
+      setResult({ places: nearbyData.places, analysis: null })
+      setLoading(false)
+
+      // Step 2: AI Analysis — jalan di background
+      const fullRes = await fetch("/api/places", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skipNearby: true, searchId: nearbyData.searchId, places: nearbyData.places, location: loc }),
+      })
+      const fullData = await fullRes.json()
+      if (fullData.error) setError(fullData.error)
+      else setResult({ places: nearbyData.places, analysis: fullData.analysis })
     } catch { setError("Gagal terhubung ke server") }
-    setLoading(false)
+    setAiLoading(false)
   }
 
   async function handlePinSelect(lat: number, lng: number) {
@@ -116,9 +129,21 @@ export default function SearchPage() {
                     </div>
                     <div className="space-y-4">
                       {result.analysis?.stats?.map((s: any) => (
-                        <StatCard key={s.category} {...s} isOvercrowded={result.analysis.overcrowded?.includes(s.category)} />
+                        <StatCard key={s.category} {...s} isOvercrowded={result.analysis?.overcrowded?.includes(s.category)} />
                       ))}
-                      {(!result.analysis?.stats || result.analysis.stats.length === 0) && (
+                      {aiLoading && !result.analysis && (
+                        <div className="space-y-4">
+                          {[1,2,3].map(i => (
+                            <div key={i} className="space-y-2">
+                              <div className="h-4 w-24 shimmer" />
+                              <div className="h-2 w-full shimmer" />
+                              <div className="h-3 w-32 shimmer" />
+                            </div>
+                          ))}
+                          <p className="text-xs text-muted-foreground text-center pt-2">🧠 AI sedang menganalisis...</p>
+                        </div>
+                      )}
+                      {!aiLoading && (!result.analysis?.stats || result.analysis.stats.length === 0) && (
                         <p className="text-sm text-muted-foreground">Tidak ada data statistik</p>
                       )}
                     </div>
@@ -141,7 +166,17 @@ export default function SearchPage() {
                       {result.analysis?.recommendations?.map((r: any) => (
                         <RecommendationCard key={r.rank} {...r} />
                       ))}
-                      {(!result.analysis?.recommendations || result.analysis.recommendations.length === 0) && (
+                      {aiLoading && !result.analysis && (
+                        <div className="space-y-3">
+                          {[1,2].map(i => (
+                            <div key={i} className="p-4 rounded-lg bg-muted/30 space-y-2">
+                              <div className="h-5 w-32 shimmer" />
+                              <div className="h-3 w-full shimmer" />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {!aiLoading && (!result.analysis?.recommendations || result.analysis.recommendations.length === 0) && (
                         <p className="text-sm text-muted-foreground">Tidak ada rekomendasi</p>
                       )}
                     </div>
