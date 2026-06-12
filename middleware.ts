@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth"
 import { NextResponse } from "next/server"
 
-export const proxy = auth((req) => {
+export default auth((req) => {
   const user = req.auth?.user as any
   const path = req.nextUrl.pathname
 
