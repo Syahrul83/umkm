@@ -1,5 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
 
 interface PrintPdfButtonProps {
   title: string
@@ -12,16 +14,12 @@ export default function PrintPdfButton({ title, data, selectedIds, summary }: Pr
   const items = selectedIds ? data.filter((d) => selectedIds.includes(d.id)) : data
 
   async function handlePrint() {
-    const { default: jsPDF } = await import("jspdf")
-    await import("jspdf-autotable")
     const doc = new jsPDF()
 
-    // Title
     doc.setFontSize(14)
     doc.setTextColor(0, 0, 0)
     doc.text(title, 14, 18)
 
-    // Summary
     let y = 18
     if (summary) {
       doc.setFontSize(9)
@@ -32,7 +30,6 @@ export default function PrintPdfButton({ title, data, selectedIds, summary }: Pr
       y = 26
     }
 
-    // Table
     const rows = items.map((item: any) => [
       item.user_email || "-",
       item.location,
@@ -79,7 +76,6 @@ export default function PrintPdfButton({ title, data, selectedIds, summary }: Pr
       pageBreak: "auto",
     })
 
-    // Page numbers
     const pageCount = (doc.internal as any).getNumberOfPages()
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i)
