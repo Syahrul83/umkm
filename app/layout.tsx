@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" className={`${inter.className} h-full antialiased`}>
       <head>
+        <meta name="dicoding:email" content="syahrulanwar83@gmail.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap"
           rel="stylesheet"
