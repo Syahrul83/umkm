@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import jsPDF from "jspdf"
-import "jspdf-autotable"
+import autoTable from "jspdf-autotable"
 
 interface PrintPdfButtonProps {
   title: string
@@ -40,7 +40,7 @@ export default function PrintPdfButton({ title, data, selectedIds, summary }: Pr
       }),
     ])
 
-    ;(doc as any).autoTable({
+    autoTable(doc, {
       startY: y,
       head: [["User", "Lokasi", "Usaha", "Rekomendasi", "Tanggal"]],
       body: rows,
