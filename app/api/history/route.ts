@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
 
   const rows = result.rows.map((r: any) => ({
     ...r,
+    user_email: user.email,
     recommendations: JSON.parse(r.recommendations || "[]"),
     analysis: JSON.parse(r.ai_analysis || "{}"),
   }))
